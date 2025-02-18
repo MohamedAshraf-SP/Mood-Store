@@ -2,6 +2,7 @@
 import crypto from 'crypto';
 import axios from 'axios'
 import { get } from 'http';
+import { generateBodyDigest, generateHeaderDigest, generateID, hashPassword } from '../../utils/generators/generators.js';
 // const customerCode = "J0086004385";
 // const password = "Jt123456";
 // const apiAccount = "663390130932817921";
@@ -15,7 +16,7 @@ const apiAccount = "749605792625197074";
 const private_key = "7df288816cf642debd114ca3764b7539";
 
 
-const generateJTCreateRequestBody = (requestData, itemsData = requestData.items) => {
+export const generateJTCreateRequestBody = (requestData, itemsData = requestData.items) => {
     return {
         txlogisticId: generateID(), // Dynamic store ID from frontend
         customerCode: customerCode, // Static value
@@ -35,7 +36,7 @@ const generateJTCreateRequestBody = (requestData, itemsData = requestData.items)
         invoceNumber: requestData.invoceNumber || "231321354564654", // Dynamic
         packingNumber: requestData.packingNumber || "1313213254564564df", // Dynamic
         batchNumber: requestData.batchNumber || "",
-        billCode: requestData.billCode || "",
+        billCode: requestData.billCode || "-",
         operateType: requestData.operateType || 1, // 1 = Adding, 2 = Updating
 
         sendStartTime: requestData.sendStartTime || "2022-03-17 14:53:44",
@@ -78,7 +79,7 @@ const generateJTCreateRequestBody = (requestData, itemsData = requestData.items)
             name: requestData.sender?.name || "Mody Store",
             company: requestData.sender?.company || "JT",
             postCode: requestData.sender?.postCode || "16880",
-            prov: requestData.sender?.prov || " ",
+            prov: requestData.sender?.prov || "البحيرة",
             areaCode: requestData.sender?.areaCode || "1",
             building: requestData.sender?.building || "1",
             floor: requestData.sender?.floor || "1",
@@ -92,7 +93,7 @@ const generateJTCreateRequestBody = (requestData, itemsData = requestData.items)
     }
 };
 
-const generateJTCancelRequestBody = (requestData) => {
+export const generateJTCancelRequestBody = (requestData) => {
     return {
         txlogisticId: requestData.txlogisticId, // Dynamic store ID from frontend
         customerCode: customerCode, // Static value
@@ -101,26 +102,26 @@ const generateJTCancelRequestBody = (requestData) => {
         orderType: "1", // Static
     }
 };
-const generateJTPrintRequestBody = (requestData) => {
+export const generateJTPrintRequestBody = (requestData) => {
     return {
         billCode: requestData.billCode, // Dynamic store ID from frontend
         customerCode: customerCode, // Static value
         digest: generateBodyDigest(customerCode, hashPassword(password), private_key), // Optional dynamic, default fallback
         printSize: requestData.printSize || 0,
         printCod: requestData.printCod || 0,
-        showCustomerOrderId:requestData.showCustomerOrderId|| 1,//Print the barcode of the customer order number or not，
-                                                    //  value 0 or null refers to not print 
-                                                    //  value 1 refers to print
-}
+        showCustomerOrderId: requestData.showCustomerOrderId || 1,//Print the barcode of the customer order number or not，
+        //  value 0 or null refers to not print 
+        //  value 1 refers to print
+    }
 };
-const generateJTGetOrdersRequestBody = (requestData) => {
+export const generateJTGetOrdersRequestBody = (requestData) => {
     return {
         customerCode: customerCode, // Static value
         digest: generateBodyDigest(customerCode, hashPassword(password), private_key), // Optional dynamic, default fallback
-        command: requestData.command||3,
-        serialNumber: requestData.serialNumber||[],
+        command: requestData.command || 3,
+        serialNumber: requestData.serialNumber || [],
         startDate: requestData.startDate,
-        endDate: requestData.endDate, 
+        endDate: requestData.endDate,
         status: requestData.status, //Status 
         // (the order status is taken from the status table below, filtered data is used, all by default):
         //  canceled 104; 
@@ -134,9 +135,9 @@ const generateJTGetOrdersRequestBody = (requestData) => {
 };
 
 
-const OrderRequest=async(generatedBody,path)=>{
-    let body = JSON.stringify(dynamicBody)
-    const data = { bizContent: (JSON.stringify(dynamicBody)) }
+export const OrderRequest=async(path,generatedBody)=>{
+    let body = JSON.stringify(generatedBody)
+    const data = { bizContent: (JSON.stringify(generatedBody)) }
     try {
         const res = await axios.post(
             `https://openapi.jtjms-eg.com/webopenplatformapi/api/order${path}`,
@@ -151,7 +152,8 @@ const OrderRequest=async(generatedBody,path)=>{
             })
     
     
-        console.log(res.data);
+        console.log(res.data,path);
+        return res
     } catch (e) {
         console.log(e.message);
     }

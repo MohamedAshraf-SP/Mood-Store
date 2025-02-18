@@ -5,6 +5,8 @@ import usersRoute from "./users.js";
 //import emailSenderRouter from "./email.js";
 import helpersRoute from "./helpers/consts.js";
 import addressRouter from "./addresses.js";
+import visitorsOrdersRoute from "./orders/visitorsOrders.js";
+import JNTOrdersRoute from "./orders/JNTOrders.js";
 import { authRoute } from "./auth/authentication.js";
 import { authMiddleware, roleMiddleware } from "../middlewares/autherization.js";
 
@@ -22,7 +24,11 @@ router.use("/v1/auth", authRoute);
 
 router.use("/v1/addresses", addressRouter);
 router.use("/v1/helpers", helpersRoute);
-router.use("/v1", usersRoute);
+router.use("/v1/users", usersRoute);
+router.use("/v1/visitors/orders", visitorsOrdersRoute);
+router.use("/v1/jnt/orders", JNTOrdersRoute);
+
+
 
 // /v1/Students/Count
 

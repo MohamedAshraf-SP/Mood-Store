@@ -10,11 +10,11 @@ import {
 export const usersRoute = express.Router();
 
 
-usersRoute.delete("/user/d/:id", deleteUser);
-usersRoute.post("/user/:id", getUser);
-usersRoute.post("/user", addUser);
-usersRoute.post("/users", getUsers);
-usersRoute.put("/user/:id", updateUser);
+usersRoute.delete("/:id", deleteUser);
+usersRoute.post("/:id", getUser);
+usersRoute.post("/", addUser);
+usersRoute.get("/", getUsers);
+usersRoute.put("/:id", updateUser);
 
 
 export default usersRoute;
