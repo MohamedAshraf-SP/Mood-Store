@@ -1,0 +1,57 @@
+{
+	"info": {
+		"_postman_id": "edf6b423-ce7d-4a21-a443-85723fba15ca",
+		"name": "Create Order Live R8",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31268101",
+		"_collection_link": "https://jt-it-team-5412.postman.co/workspace/J%2526T-IT-Team-Workspace~a72c7a67-425b-45fa-854b-3e347eaacf40/collection/31268101-edf6b423-ce7d-4a21-a443-85723fba15ca?action=share&source=collection_link&creator=31268101"
+	},
+	"item": [
+		{
+			"name": "https://openapi.jtjms-eg.com/webopenplatformapi/api/order/addOrder",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "apiAccount",
+						"value": "740232391141883913"
+					},
+					{
+						"key": "digest",
+						"value": "ED7zPZmkBanzJdW0Zn86Dg=="
+					},
+					{
+						"key": "timestamp",
+						"value": "1646984719909"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "bizContent",
+							"value": "{\n'customerCode': 'J0086006892',\n'digest': 'cP08AVf/SNk+rER0PFQJxg==',\n'deliveryType': '04',\n'payType': 'PP_PM',\n'expressType': 'EZ',\n'network': '',\n'length': 30,\n'sendStartTime': '2022-03-17 14:53:44',\n'weight': 5.02,\n'itemsValue':'',\n'remark': 'test',\n'invoceNumber': '231321354564654',\n'packingNumber': '1313213254564564df',\n'batchNumber': '',\n'txlogisticId': 'EGYUAT72504945102',\n'billCode': '',\n'operateType': 1,\n'expectDeliveryStartTime':'2022-09-07 14:53:44',\n'expectDeliveryEndTime':'2022-09-08 14:53:44',\n'goodsType': 'ITN1',\n'totalQuantity': '1',\n'receiver': {\n'area': 'القاهرة',\n'street': 'D',\n'address':'kkk',\n'addressBak': 'FFF',\n'town': 'll',\n'city': 'مدينة نصر',\n'mobile': '01099075241',\n'mailBox': 'ant_li123@qq.com',\n'phone': '034351203',\n'countryCode': 'EGY',\n'name': 'HAGER',\n'alternateReceiverPhoneNo': '12-31321322',\n'company': 'JT',\n'postCode': '54830',\n'prov': 'القاهرة',\n'areaCode': 'A0003324',\n'building': '13',\n'floor': '25',\n'flats': '47',\n},\n'sender': {\n'area': 'الإسكندرية',\n'street': 'jjj',\n'city': 'المنتزه',\n'mobile': '01099075241',\n'mailBox': 'ant_DY@qq.com',\n'phone': '01099075241',\n'countryCode': 'MEX',\n'name': 'MAGDY',\n'company': 'JT',\n'postCode': '16880',\n'prov': 'الإسكندرية',\n'areaCode': 'A0002237',\n'building': '13',\n'floor': '25',\n'flats': '47'\n},\n'width': 10,\n'offerFee':1 ,\n'items': [{\n'englishName': 'test',\n'number': 1,\n'itemType': 'ITN16',\n'itemName': 'file type',\n'priceCurrency': 'DHS',\n'itemValue': '',\n'chineseName': 'test_order',\n'itemUrl': 'http://www.baidu.com',\n'desc': 'test_order'},\n{\n'englishName': 'test',\n'number': 1,\n'itemType': 'ITN16',\n'itemName': 'testy',\n'priceCurrency': 'DHS',\n'chineseName': 'test_order',\n'itemUrl': 'http://www.baidu.com',\n'desc': 'test_order'\n}],\n'sendEndTime': '2022-03-18 14:53:44',\n'height': 60}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://openapi.jtjms-eg.com/webopenplatformapi/api/order/addOrder",
+					"protocol": "https",
+					"host": [
+						"openapi",
+						"jtjms-eg",
+						"com"
+					],
+					"path": [
+						"webopenplatformapi",
+						"api",
+						"order",
+						"addOrder"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

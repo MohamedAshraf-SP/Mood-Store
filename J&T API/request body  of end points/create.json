@@ -1,0 +1,92 @@
+{
+    "txlogisticId": "EGYUAT72504945102", //mody store id 
+    "customerCode": "J0086006892",
+    "digest": "cP08AVf/SNk+rER0PFQJxg==",
+    
+    "payType": "PP_PM", // static 
+    "expressType": "EZ", // static
+    "deliveryType": "04",// static home dilivary
+    "goodsType": "ITN16",//others 
+
+    "length": 30,
+    "weight": 5.02,
+    "itemsValue":"",
+    "remark": "test",
+    "invoceNumber": "231321354564654", //??
+    "packingNumber": "1313213254564564df",//??
+    "batchNumber": "",
+    "billCode": "",
+    "operateType": 1,
+    // In the event, the customer fills in "Add" to add an order;
+    // if the customer submits "Update", then an order is updated.  1 Adding   2 Modifying
+
+
+    "sendStartTime": "2022-03-17 14:53:44",
+    "sendEndTime": "2022-03-18 14:53:44",
+    "expectDeliveryStartTime":"2022-09-07 14:53:44",
+    "expectDeliveryEndTime":"2022-09-08 14:53:44",
+    "totalQuantity": "1",    
+    "height": 60,
+
+
+    "receiver": {
+    "area": "القاهرة",
+    "street": "D",
+    "address":"kkk",
+    "addressBak": "FFF",
+    "town": "ll",
+    "city": "مدينة نصر",
+    "mobile": "01099075241",
+    "mailBox": "ant_li123@qq.com",
+    "phone": "034351203",
+    "countryCode": "EGY",
+    "name": "HAGER",
+    "alternateReceiverPhoneNo": "12-31321322",
+    "company": "JT",
+    "postCode": "54830",
+    "prov": "القاهرة",
+    "areaCode": "A0003324",
+    "building": "13",
+    "floor": "25",
+    "flats": "47"
+    },
+    "sender": {
+    "area": "الإسكندرية",
+    "street": "jjj",
+    "city": "المنتزه",
+    "mobile": "01099075241",
+    "mailBox": "ant_DY@qq.com",
+    "phone": "01099075241",
+    "countryCode": "MEX",
+    "name": "MAGDY",
+    "company": "JT",
+    "postCode": "16880",
+    "prov": "الإسكندرية",
+    "areaCode": "A0002237",
+    "building": "13",
+    "floor": "25",
+    "flats": "47"
+    },
+    "width": 10,
+    "offerFee":1 ,
+    "items": [{
+    "englishName": "test",
+    "number": 1,
+    "itemType": "ITN16",
+    "itemName": "file type",
+    "priceCurrency": "DHS",
+    "itemValue": "",
+    "chineseName": "test_order",
+    "itemUrl": "http://www.baidu.com",
+    "desc": "test_order"},
+    {
+    "englishName": "test",
+    "number": 1,
+    "itemType": "ITN16",
+    "itemName": "testy",
+    "priceCurrency": "DHS",
+    "chineseName": "test_order",
+    "itemUrl": "http://www.baidu.com",
+    "desc": "test_order"
+    }]
+}

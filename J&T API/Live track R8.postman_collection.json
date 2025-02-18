@@ -1,0 +1,174 @@
+{
+	"info": {
+		"_postman_id": "7b7539d8-fb49-4d9e-a15f-7c66c6cb468f",
+		"name": "Live track R8",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31268101",
+		"_collection_link": "https://jt-it-team-5412.postman.co/workspace/J%2526T-IT-Team-Workspace~a72c7a67-425b-45fa-854b-3e347eaacf40/collection/31268101-7b7539d8-fb49-4d9e-a15f-7c66c6cb468f?action=share&source=collection_link&creator=31268101"
+	},
+	"item": [
+		{
+			"name": "https://openapi.jtjms-eg.com/webopenplatformapi/api/order/addOrder",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "apiAccount",
+						"value": "663390130932817921"
+					},
+					{
+						"key": "digest",
+						"value": "qpxL7o13ee8gHoZZmo0XTQ=="
+					},
+					{
+						"key": "timestamp",
+						"value": "1646984719909"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "bizContent",
+							"value": "{'billCodes': 'JEG000211955752'}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://openapi.jtjms-eg.com/webopenplatformapi/api/logistics/trace",
+					"protocol": "https",
+					"host": [
+						"openapi",
+						"jtjms-eg",
+						"com"
+					],
+					"path": [
+						"webopenplatformapi",
+						"api",
+						"logistics",
+						"trace"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "nafea",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "apiAccount",
+								"value": "663390130932817921"
+							},
+							{
+								"key": "digest",
+								"value": "WhT1kF/i6qjOwSyznOp8Dg=="
+							},
+							{
+								"key": "timestamp",
+								"value": "1646984719909"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "bizContent",
+									"value": "{'billCodes': 'JEG000236376655'}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://openapi.jtjms-eg.com/webopenplatformapi/api/logistics/trace",
+							"protocol": "https",
+							"host": [
+								"openapi",
+								"jtjms-eg",
+								"com"
+							],
+							"path": [
+								"webopenplatformapi",
+								"api",
+								"logistics",
+								"trace"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json;charset=UTF-8"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 08 Oct 2024 06:23:28 GMT"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "acw_tc=ac11000117283686084234355e007a688a2db34ba84dc141f0808a2d2c4205;path=/;HttpOnly;Max-Age=1800"
+						},
+						{
+							"key": "Server",
+							"value": "nginx"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "GET,PUT,DELETE, POST, OPTIONS"
+						},
+						{
+							"key": "Content-Security-Policy",
+							"value": "upgrade-insecure-requests;connect-src *"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						},
+						{
+							"key": "X-Cache",
+							"value": "Miss from cloudfront"
+						},
+						{
+							"key": "Via",
+							"value": "1.1 89d08a9a907225aa0028549499749ef0.cloudfront.net (CloudFront)"
+						},
+						{
+							"key": "X-Amz-Cf-Pop",
+							"value": "CAI50-P2"
+						},
+						{
+							"key": "X-Amz-Cf-Id",
+							"value": "HOei--0PQCceVQGQM1YJC9GF9S3xmvDEA1WVVnhR5BwxzjzTRq9EWQ=="
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": \"1\",\n    \"msg\": \"success\",\n    \"data\": [\n        {\n            \"billCode\": \"JEG000236376655\",\n            \"details\": [\n                {\n                    \"scanTime\": \"2024-10-07 12:59:15\",\n                    \"desc\": \"【الدايرة الجمركية】【TEST2-B4(网点)】J&T courier HagerTest(01280930326) completed the delivery.Received by【At the door】， If there is any problem or complaint, please dial branch‘s phone number：\",\n                    \"scanType\": \"Signing scan\",\n                    \"scanNetworkTypeName\": \"网点\",\n                    \"scanNetworkName\": \"TEST2-B4(网点)\",\n                    \"scanNetworkId\": 279,\n                    \"scanNetworkProvince\": \"الإسكندرية\",\n                    \"scanNetworkCity\": \"الدايرة الجمركية\",\n                    \"scanNetworkArea\": \"الدايرة الجمركية\",\n                    \"problemReason\": \"快件签收\",\n                    \"sigPicUrl\": \"https://pro-jmseg-file.s3.eu-central-1.amazonaws.com/awa180low/yl-web-jmseg-app-bc/SIGNING_SCAN_LIST/20241007/4703_wa_HagerTest_100_20241007135918829_5882.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20241008T062328Z&X-Amz-SignedHeaders=host&X-Amz-Expires=518400&X-Amz-Credential=AKIAY3KSSVR4QCFQUAWE%2F20241008%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Signature=ff90697e9c72a58467fa4ce9d5b6ae7c7387d5a862a4f3988e0727b052af718a\",\n                    \"electronicSignaturePicUrl\": \"https://pro-jmseg-file.s3.eu-central-1.amazonaws.com/awa180low/yl-web-jmseg-app-bc/SIGNING_SCAN_LIST/20241007/1905_wa_HagerTest_100_20241007135921718_8428.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20241008T062328Z&X-Amz-SignedHeaders=host&X-Amz-Expires=518400&X-Amz-Credential=AKIAY3KSSVR4QCFQUAWE%2F20241008%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Signature=e81617373f97f125cb88f353d01cdc41f8ca940b2e29ff3f7e4e0bc6f9ddf6c1\",\n                    \"otp\": \"4377\",\n                    \"scanTypeCode\": 100\n                },\n                {\n                    \"scanTime\": \"2024-10-07 12:57:54\",\n                    \"desc\": \"【الدايرة الجمركية】【TEST2-B4(网点)】J&T courier HagerTest(01280930326)is delivering the shipment. If there is any problem or complaint, please dial branch‘s phone number：\",\n                    \"scanType\": \"Delivery scan\",\n                    \"scanNetworkTypeName\": \"网点\",\n                    \"scanNetworkName\": \"TEST2-B4(网点)\",\n                    \"scanNetworkId\": 279,\n                    \"scanNetworkProvince\": \"الإسكندرية\",\n                    \"scanNetworkCity\": \"الدايرة الجمركية\",\n                    \"scanNetworkArea\": \"الدايرة الجمركية\",\n                    \"problemReason\": \"派件扫描\",\n                    \"scanTypeCode\": 94\n                },\n                {\n                    \"scanTime\": \"2024-10-07 12:56:33\",\n                    \"desc\": \"【الدايرة الجمركية】【TEST2-B4(网点)】J&T courier HagerTest(01280930326)picked up the shipment. If there is any problem or complaint, please dial branch‘s phone number：\",\n                    \"scanType\": \"Pickup scan\",\n                    \"scanNetworkTypeName\": \"网点\",\n                    \"scanNetworkName\": \"TEST2-B4(网点)\",\n                    \"scanNetworkId\": 279,\n                    \"scanNetworkProvince\": \"الإسكندرية\",\n                    \"scanNetworkCity\": \"الدايرة الجمركية\",\n                    \"scanNetworkArea\": \"الدايرة الجمركية\",\n                    \"problemReason\": \"快件揽收\",\n                    \"scanTypeCode\": 10\n                }\n            ],\n            \"numberOfDispatch\": 1\n        }\n    ]\n}"
+				}
+			]
+		}
+	]
+}

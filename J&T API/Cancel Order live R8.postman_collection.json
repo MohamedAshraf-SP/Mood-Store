@@ -1,0 +1,63 @@
+{
+	"info": {
+		"_postman_id": "fd026b2c-bb4e-4454-89f0-91a6e563ffad",
+		"name": "Cancel Order live R8",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31268101",
+		"_collection_link": "https://jt-it-team-5412.postman.co/workspace/J%2526T-IT-Team-Workspace~a72c7a67-425b-45fa-854b-3e347eaacf40/collection/31268101-fd026b2c-bb4e-4454-89f0-91a6e563ffad?action=share&source=collection_link&creator=31268101"
+	},
+	"item": [
+		{
+			"name": "https://demoopenapi.jtjms-eg.com/webopenplatformapi/api/order/addOrder?uuid=5f1a0172abdd42798339bdc4e48a720f Copy",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "apiAccount",
+						"value": "292508153084379141"
+					},
+					{
+						"key": "digest",
+						"value": "r6OFLuiLjKxAs1wXKHHwrw=="
+					},
+					{
+						"key": "timestamp",
+						"value": "1646984719909"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "bizContent",
+							"value": "{\n'txlogisticId': 'test024',\n'orderType': 1,\n'reason': 'test',\n'customerCode': 'J0086024421',\n'digest': 'KA2UNQUGUUAiZtV5K5p/pg=='\n}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://demoopenapi.jtjms-eg.com/webopenplatformapi/api/order/cancelOrder?uuid=5f99fa1fd3514bca8d4e0a59ffa6839d",
+					"protocol": "https",
+					"host": [
+						"demoopenapi",
+						"jtjms-eg",
+						"com"
+					],
+					"path": [
+						"webopenplatformapi",
+						"api",
+						"order",
+						"cancelOrder"
+					],
+					"query": [
+						{
+							"key": "uuid",
+							"value": "5f99fa1fd3514bca8d4e0a59ffa6839d"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
