@@ -1,5 +1,5 @@
-import Address from "../models/addresses.js";
-import AddressService from "../services/addressService.js";
+import Address from "../../models/addresses.js";
+import AddressService from "../../services/addressService.js";
 //import { handleError } from "../utils/errorHandler.js";
 
 export const getAddressSeprated = async (req, res) => {
@@ -13,7 +13,7 @@ export const getAddressSeprated = async (req, res) => {
         } else if (!City) {
             result = await Address.find({ Province,enabled }).distinct('City'); // Select only the City column
         } else {
-            result = await Address.find({ Province, City,enabled }).distinct('Area'); // Select only the Area column
+            result = await Address.find({ Province, City,enabled }).distinct('Area shippingPrice'); // Select only the Area column
         }
 
         res.status(200).json({ success: true, data: result });

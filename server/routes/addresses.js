@@ -1,9 +1,9 @@
 
-import { importAddressesFromCSV } from "../controllers/addressesFormCSV.js";
+import { importAddressesFromCSV } from "./../controllers/addresses/addressesFormCSV.js";
 import { upload } from "../middlewares/multer.js";
 import { Router } from 'express';
 
-import { getAddresses, getAddressSeprated, updateStatus } from "../controllers/addresses.js"
+import { getAddresses, getAddressSeprated, updateStatus } from "./../controllers/addresses/addresses.js"
 import { roleMiddleware } from "../middlewares/autherization.js";
 const addressRoute = new Router()
 

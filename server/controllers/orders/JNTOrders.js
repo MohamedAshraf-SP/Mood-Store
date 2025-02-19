@@ -1,6 +1,7 @@
 // Import the order model
+import { all } from "axios";
 import Order from "../../models/orders.js";
-import { generateJTCancelRequestBody, generateJTCreateRequestBody, OrderRequest } from "../../services/APIs/JT_API.js";
+import { generateJTCancelRequestBody,generateTrackRequestBody, generateJTCreateRequestBody, generateJTPrintRequestBody, OrderRequest } from "../../services/APIs/JT_API.js";
 
 
 // Get all orders
@@ -41,7 +42,7 @@ export const addJNTOrder = async (req, res) => {
             .select('-_id -createdAt -updatedAt -__v -items._id -sender._id -receiver._id -billCode')
             .lean();
 
-        const responseOfJT = await OrderRequest('/addOrder', requestOrderData)
+        const responseOfJT = await OrderRequest('/order/addOrder', requestOrderData)
     
         if(responseOfJT.data.msg=="success"){
          await Order.findByIdAndUpdate(savedOrder._id, {billCode:responseOfJT.data.data.billCode}, {
@@ -68,7 +69,7 @@ export const confirmJNTOrder = async (req, res) => {
             return res.status(400).json({ message: "order not found" })
         }
 
-         const responseOfJT = await OrderRequest('/addOrder', requestOrderData)
+         const responseOfJT = await OrderRequest('/order/addOrder', requestOrderData)
          const updatedOrder = await Order.findByIdAndUpdate(orderId, {confirmed:"1"}, {
                         new: true,
                     });
@@ -80,6 +81,44 @@ export const confirmJNTOrder = async (req, res) => {
 };
 
 // Delete a order by ID
+export const printJNTOrder = async (req, res) => {
+    try {
+        let {printCod,printSize,showCustomerOrderId}=req.body
+        let orderData = await Order.findByIdAndUpdate(req.params.id,{deleted:"1"})
+            .select('-_id  billCode customerCode')
+            .lean();
+
+            if (!orderData) {
+                return res.status(404).json({ message: "Order not found" });
+            }
+
+            if(orderData.billCode=="-"){
+                return res.status(404).json({ message: "Order not Confirmed" });
+            }
+           
+            orderData.printCod=printCod
+            orderData.printSize=printSize
+            orderData.showCustomerOrderId=showCustomerOrderId
+          
+
+            let printRequestData= generateJTPrintRequestBody(orderData)
+         // let  cancelRequestData= generateJTCancelRequestBody({txlogisticId:"SYS-685489473"})
+            
+        ///console.log(orderData,printRequestData);
+
+     const responseOfJT=await OrderRequest('/order/printOrder',printRequestData)
+
+     const base64content=responseOfJT.data.data.base64EncodeContent
+     const file=Buffer.from(base64content,"base64")
+    // console.log(responseOfJT.data.data.base64EncodeContent);
+
+    res.setHeader("Content-Type", "application/pdf");
+        res.status(200).write(file)
+        res.end()
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
 export const cancelJNTOrder = async (req, res) => {
     try {
         let orderData = await Order.findByIdAndUpdate(req.params.id,{deleted:"1"})
@@ -90,13 +129,30 @@ export const cancelJNTOrder = async (req, res) => {
          let cancelRequestData= generateJTCancelRequestBody(orderData)
          // let  cancelRequestData= generateJTCancelRequestBody({txlogisticId:"SYS-685489473"})
             
-        console.log(orderData,cancelRequestData);
+      //  console.log(orderData,cancelRequestData);
 
-     const responseOfJT=await OrderRequest('/cancelOrder',cancelRequestData)
+     const responseOfJT=await OrderRequest('/order/cancelOrder',cancelRequestData)
         if (!orderData) {
             return res.status(404).json({ message: "Order not found" });
         }
         res.status(200).json({ deleteMessage: responseOfJT.data.msg });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+export const trackOrder = async (req, res) => {
+    try {
+        let requestData= req.body
+
+         let allRequestData= generateTrackRequestBody(requestData)
+         console.log(allRequestData)
+         // let  cancelRequestData= generateJTCancelRequestBody({txlogisticId:"SYS-685489473"})
+            
+      //  console.log(orderData,cancelRequestData);
+
+     const responseOfJT=await OrderRequest('/logistics/trace',allRequestData)
+        
+        res.status(200).json({data:responseOfJT.data.data });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

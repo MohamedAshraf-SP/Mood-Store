@@ -102,6 +102,11 @@ export const generateJTCancelRequestBody = (requestData) => {
         orderType: "1", // Static
     }
 };
+export const generateTrackRequestBody = (requestData) => {
+    return {
+        billCodes: requestData.billCodes
+    }
+};
 export const generateJTPrintRequestBody = (requestData) => {
     return {
         billCode: requestData.billCode, // Dynamic store ID from frontend
@@ -135,12 +140,12 @@ export const generateJTGetOrdersRequestBody = (requestData) => {
 };
 
 
-export const OrderRequest=async(path,generatedBody)=>{
+export const OrderRequest = async (path, generatedBody) => {
     let body = JSON.stringify(generatedBody)
     const data = { bizContent: (JSON.stringify(generatedBody)) }
     try {
         const res = await axios.post(
-            `https://openapi.jtjms-eg.com/webopenplatformapi/api/order${path}`,
+            `https://openapi.jtjms-eg.com/webopenplatformapi/api${path}`,
             data,
             {
                 headers: {
@@ -150,9 +155,9 @@ export const OrderRequest=async(path,generatedBody)=>{
                     "timestamp": Math.floor(Date.now() / 1000)
                 }
             })
-    
-    
-        console.log(res.data,path);
+
+
+        console.log(res.data, path);
         return res
     } catch (e) {
         console.log(e.message);

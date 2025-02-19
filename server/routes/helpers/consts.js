@@ -1,5 +1,5 @@
 
-import { importAddressesFromCSV } from "../../controllers/addressesFormCSV.js";
+import { importAddressesFromCSV } from "../../controllers/addresses/addressesFormCSV.js";
 import { upload } from "../../middlewares/multer.js";
 import { Router } from 'express';
 
