@@ -5,15 +5,19 @@ import AddressService from "../../services/addressService.js";
 export const getAddressSeprated = async (req, res) => {
     try {
         const { Province, City } = req.body;
-        let enabled =req.body.enabled||"1"
+        let enabled = req.body.enabled || "1"
+       // console.log(Province, City);
 
         let result;
         if (!Province) {
-            result = await Address.find({enabled}).distinct('Province'); // Select only the Province column
+            result = await Address.find({ enabled }).distinct('Province');
+           // console.log(result);// Select only the Province column
         } else if (!City) {
-            result = await Address.find({ Province,enabled }).distinct('City'); // Select only the City column
+            result = await Address.find({ Province, enabled }).distinct('City');
+        //    console.log(result); // Select only the City column
         } else {
-            result = await Address.find({ Province, City,enabled }).distinct('Area shippingPrice'); // Select only the Area column
+            result = await Address.find({ Province, City, enabled }).distinct('Area');
+            // Select only the Area column
         }
 
         res.status(200).json({ success: true, data: result });
