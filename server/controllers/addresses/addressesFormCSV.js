@@ -8,7 +8,7 @@ export const importAddressesFromCSV = async (req, res) => {
     try {
         let envLimit = parseInt(process.env.CSV_import_limit)
         let start = parseInt(req.query.start) || 1
-        let end = parseInt(req.query.end) || envLimit
+        let end = parseInt(req.query.end)|| envLimit
 
         console.log(req.query, end);
 
@@ -30,7 +30,7 @@ export const importAddressesFromCSV = async (req, res) => {
         const path = req.file.path
 
         const results = await readCsvAsync(`./${path}`)
-        console.log(results[1]);
+        console.log(end);
 
         for (let i = start; i <= end; i++) {
             console.log(results[i]['Gov']);
@@ -51,7 +51,7 @@ export const importAddressesFromCSV = async (req, res) => {
         deleteFileWithPath(`./${path}`)
         res.status(200).json({
             message: "success!!"
-        })
+        ,end})
     } catch (e) {
         console.log(e.message)
         res.status(400).json({ Error: ` ${e.message}` })
