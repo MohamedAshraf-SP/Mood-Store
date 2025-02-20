@@ -30,10 +30,10 @@ export const importAddressesFromCSV = async (req, res) => {
         const path = req.file.path
 
         const results = await readCsvAsync(`./${path}`)
-        console.log(end);
+        //console.log(end);
 
         for (let i = start; i <= end; i++) {
-            console.log(results[i]['Gov']);
+           // console.log(results[i]['Gov']);
 
             let newAddress = new Address({
                 Province: results[i]['Gov'] || "-",
