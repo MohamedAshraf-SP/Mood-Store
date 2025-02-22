@@ -14,7 +14,7 @@ trackOrder,
 export const JNTOrdersRoute = express.Router();
 
 
-JNTOrdersRoute.get("/track", trackOrder);
+JNTOrdersRoute.get("/track/:id", trackOrder);
 JNTOrdersRoute.get("/", getJNTOrders);
 JNTOrdersRoute.get("/:id", getOrder);
 JNTOrdersRoute.post("/print/:id", printJNTOrder);
