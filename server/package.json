@@ -19,7 +19,7 @@
     "router": "^1.3.8"
   },
   "scripts": {
-    "start": "node server.js"
+    "start": "nodemon server.js"
   },
   "name": "server",
   "version": "1.0.0",

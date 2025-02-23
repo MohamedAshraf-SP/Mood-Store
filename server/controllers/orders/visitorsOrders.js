@@ -69,7 +69,7 @@ export const deleteVisitorsOrder = async (req, res) => {
 export const updateVisitorsOrder = async (req, res) => {
     try {
         const { id } = req.params; // Assuming you use ID to find the order
-        const updatedOrder = await Order.findByIdAndUpdate(id, req.body, {
+        const updatedOrder = await Order.findOneAndUpdate(({_id:id, deleted:"0", confirmed:"0"}), req.body, {
             new: true,
         });
 
