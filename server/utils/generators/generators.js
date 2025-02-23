@@ -33,5 +33,9 @@ export const generateHeaderDigest = (body, privateKey) => {
     return base64Encoded;
 };
 export const generateID = () => {
-    return "SYS-"+Math.floor(Math.random() * 1000000000)
+    return "SYS" + Math.floor(Math.random() * 1010018010)
 }
+
+export const generateBarcode = () => {
+    return "BAR" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6).toUpperCase();
+};
