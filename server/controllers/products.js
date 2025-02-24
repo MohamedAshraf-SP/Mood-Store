@@ -4,6 +4,26 @@ import { generateBarcode } from "../utils/generators/generators.js";
 
 export const addProduct = async (req, res) => {
     try {
+        
+
+        const variants=req.body.variants?req.body.variants.map((variant)=>({
+            barCode:generateBarcode(),
+            size:variant.size,
+            color:variant.color,
+            stock:variant.stock,
+            
+        })):[{
+            barCode:generateBarcode(),
+            price:1,
+            size:"لايوجد",
+            color:"لايوجد",
+            stock:0
+            
+        }]
+     
+
+        console.log(variants);
+
 
         if (!req.files) return res.status(400).json({ error: "error" });
 
@@ -11,7 +31,8 @@ export const addProduct = async (req, res) => {
 
         const productData = {
             ...req.body,
-            images
+            images,
+            variants
         };
 
 

@@ -168,7 +168,8 @@ export const trackOrder = async (req, res) => {
         let  requestData1={billCodes:"JEG000282544108"}
 
 
-       let allRequestData = generateTrackRequestBody(requestData[0])
+    //   let allRequestData = generateTrackRequestBody(requestData[0])
+       let allRequestData = generateTrackRequestBody(requestData1)
 
         console.log(allRequestData)
 
