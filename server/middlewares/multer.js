@@ -12,7 +12,6 @@ const urlParsingLastWord = (url) => {
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-
         req.lastword = urlParsingLastWord(req.baseUrl)
         const uploadPath = `uploads/${req.lastword}`
 

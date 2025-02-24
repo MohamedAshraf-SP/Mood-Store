@@ -164,6 +164,7 @@ export const trackOrder = async (req, res) => {
             
           ])
           console.log(requestData);
+     //     if(requestData.length<1)return res.status(404).json({message:"order not confirmed or not exist"})
 
         let  requestData1={billCodes:"JEG000282544108"}
 
