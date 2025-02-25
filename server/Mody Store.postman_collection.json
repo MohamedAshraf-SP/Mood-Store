@@ -1,0 +1,1464 @@
+{
+	"info": {
+		"_postman_id": "2f5ea26b-f5a5-487b-b3d8-b64fdd48879b",
+		"name": "Mody Store",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "19952273",
+		"_collection_link": "https://faezoon.postman.co/workspace/faezoon-Workspace~363d2b31-641a-4f96-9215-c63493672946/collection/19952273-2f5ea26b-f5a5-487b-b3d8-b64fdd48879b?action=share&source=collection_link&creator=19952273"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Authentication",
+					"item": [
+						{
+							"name": "Login",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{client token}}"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\":\"mohamed.ashrafsp@gmail.com\",\r\n    \"password\":\"bqaQmdxDBAs\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{url}}/auth/login"
+							},
+							"response": []
+						},
+						{
+							"name": "Refresh Token",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"refreshToken\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ODgwZjkzMTEzZTNhY2QyZWU0ZTAzNyIsImlhdCI6MTczNzk4MjgxNywiZXhwIjoxNzM5MTkyNDE3fQ.Pd9oy4fkkuSUF1vBzH7LfR42ICqTh7cPN2bigkVNHEI\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{url}}/auth/refreshtoken"
+							},
+							"response": []
+						},
+						{
+							"name": "Reset Password",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\":\"mohamed.aswwwhrafsp@gmail.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{url}}/auth/resetpassword"
+							},
+							"response": []
+						},
+						{
+							"name": "logout",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ODgwZjkzMTEzZTNhY2QyZWU0ZTAzNyIsInJvbGUiOiJjbGllbnQiLCJpYXQiOjE3MzY5NzAyODAsImV4cCI6MTczNjk3Mzg4MH0.vdfvurR7wV_oTS9imqtlqThDwto-amuzw4-SebM2DHo"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"refreshToken\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ODgwZjkzMTEzZTNhY2QyZWU0ZTAzNyIsInJvbGUiOiJjbGllbnQiLCJpYXQiOjE3MzY5NzAyODAsImV4cCI6MTczNjk3Mzg4MH0.vdfvurR7wV_oTS9imqtlqThDwto-amuzw4-SebM2DHo\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{url}}/auth/logout"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Check if Email exists",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"mohamzed.ashra5fsp@Gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{localhost}}/helpers/checkemail"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "J & T",
+			"item": [
+				{
+					"name": "Live tracking",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "apiAccount",
+								"value": "749605792625197074"
+							},
+							{
+								"key": "digest",
+								"value": "cy51YzoqqRX8Z0NJeoCrMA=="
+							},
+							{
+								"key": "timestamp",
+								"value": "1646984719909"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "bizContent",
+									"value": "{'billCodes': 'JEG000281265477'}",
+									"type": "text"
+								}
+							]
+						},
+						"url": "https://openapi.jtjms-eg.com/webopenplatformapi/api/logistics/trace"
+					},
+					"response": [
+						{
+							"name": "nafea",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "apiAccount",
+										"value": "663390130932817921"
+									},
+									{
+										"key": "digest",
+										"value": "WhT1kF/i6qjOwSyznOp8Dg=="
+									},
+									{
+										"key": "timestamp",
+										"value": "1646984719909"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "bizContent",
+											"value": "{'billCodes': 'JEG000236376655'}",
+											"type": "text"
+										}
+									]
+								},
+								"url": "https://openapi.jtjms-eg.com/webopenplatformapi/api/logistics/trace"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json;charset=UTF-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 08 Oct 2024 06:23:28 GMT"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "acw_tc=ac11000117283686084234355e007a688a2db34ba84dc141f0808a2d2c4205;path=/;HttpOnly;Max-Age=1800"
+								},
+								{
+									"key": "Server",
+									"value": "nginx"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "GET,PUT,DELETE, POST, OPTIONS"
+								},
+								{
+									"key": "Content-Security-Policy",
+									"value": "upgrade-insecure-requests;connect-src *"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "X-Cache",
+									"value": "Miss from cloudfront"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 89d08a9a907225aa0028549499749ef0.cloudfront.net (CloudFront)"
+								},
+								{
+									"key": "X-Amz-Cf-Pop",
+									"value": "CAI50-P2"
+								},
+								{
+									"key": "X-Amz-Cf-Id",
+									"value": "HOei--0PQCceVQGQM1YJC9GF9S3xmvDEA1WVVnhR5BwxzjzTRq9EWQ=="
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": \"1\",\n    \"msg\": \"success\",\n    \"data\": [\n        {\n            \"billCode\": \"JEG000236376655\",\n            \"details\": [\n                {\n                    \"scanTime\": \"2024-10-07 12:59:15\",\n                    \"desc\": \"【الدايرة الجمركية】【TEST2-B4(网点)】J&T courier HagerTest(01280930326) completed the delivery.Received by【At the door】， If there is any problem or complaint, please dial branch‘s phone number：\",\n                    \"scanType\": \"Signing scan\",\n                    \"scanNetworkTypeName\": \"网点\",\n                    \"scanNetworkName\": \"TEST2-B4(网点)\",\n                    \"scanNetworkId\": 279,\n                    \"scanNetworkProvince\": \"الإسكندرية\",\n                    \"scanNetworkCity\": \"الدايرة الجمركية\",\n                    \"scanNetworkArea\": \"الدايرة الجمركية\",\n                    \"problemReason\": \"快件签收\",\n                    \"sigPicUrl\": \"https://pro-jmseg-file.s3.eu-central-1.amazonaws.com/awa180low/yl-web-jmseg-app-bc/SIGNING_SCAN_LIST/20241007/4703_wa_HagerTest_100_20241007135918829_5882.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20241008T062328Z&X-Amz-SignedHeaders=host&X-Amz-Expires=518400&X-Amz-Credential=AKIAY3KSSVR4QCFQUAWE%2F20241008%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Signature=ff90697e9c72a58467fa4ce9d5b6ae7c7387d5a862a4f3988e0727b052af718a\",\n                    \"electronicSignaturePicUrl\": \"https://pro-jmseg-file.s3.eu-central-1.amazonaws.com/awa180low/yl-web-jmseg-app-bc/SIGNING_SCAN_LIST/20241007/1905_wa_HagerTest_100_20241007135921718_8428.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20241008T062328Z&X-Amz-SignedHeaders=host&X-Amz-Expires=518400&X-Amz-Credential=AKIAY3KSSVR4QCFQUAWE%2F20241008%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Signature=e81617373f97f125cb88f353d01cdc41f8ca940b2e29ff3f7e4e0bc6f9ddf6c1\",\n                    \"otp\": \"4377\",\n                    \"scanTypeCode\": 100\n                },\n                {\n                    \"scanTime\": \"2024-10-07 12:57:54\",\n                    \"desc\": \"【الدايرة الجمركية】【TEST2-B4(网点)】J&T courier HagerTest(01280930326)is delivering the shipment. If there is any problem or complaint, please dial branch‘s phone number：\",\n                    \"scanType\": \"Delivery scan\",\n                    \"scanNetworkTypeName\": \"网点\",\n                    \"scanNetworkName\": \"TEST2-B4(网点)\",\n                    \"scanNetworkId\": 279,\n                    \"scanNetworkProvince\": \"الإسكندرية\",\n                    \"scanNetworkCity\": \"الدايرة الجمركية\",\n                    \"scanNetworkArea\": \"الدايرة الجمركية\",\n                    \"problemReason\": \"派件扫描\",\n                    \"scanTypeCode\": 94\n                },\n                {\n                    \"scanTime\": \"2024-10-07 12:56:33\",\n                    \"desc\": \"【الدايرة الجمركية】【TEST2-B4(网点)】J&T courier HagerTest(01280930326)picked up the shipment. If there is any problem or complaint, please dial branch‘s phone number：\",\n                    \"scanType\": \"Pickup scan\",\n                    \"scanNetworkTypeName\": \"网点\",\n                    \"scanNetworkName\": \"TEST2-B4(网点)\",\n                    \"scanNetworkId\": 279,\n                    \"scanNetworkProvince\": \"الإسكندرية\",\n                    \"scanNetworkCity\": \"الدايرة الجمركية\",\n                    \"scanNetworkArea\": \"الدايرة الجمركية\",\n                    \"problemReason\": \"快件揽收\",\n                    \"scanTypeCode\": 10\n                }\n            ],\n            \"numberOfDispatch\": 1\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Create Order",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "apiAccount",
+								"value": "749605792625197074",
+								"type": "text"
+							},
+							{
+								"key": "digest",
+								"value": "93vBVCXmomqPIVS40Vk/cg==",
+								"type": "text"
+							},
+							{
+								"key": "timestamp",
+								"value": "1565238848921",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "bizContent",
+									"value": "{\n'customerCode': 'J0086006972',\n'digest': '7hqaqXhUvgOh5btHVuvoGA==',\n'deliveryType': '04',\n'payType': 'PP_PM',\n'expressType': 'EZ',\n'network': '',\n'length': 30,\n'sendStartTime': '2022-03-17 14:53:44',\n'weight': 5.02,\n'itemsValue':'',\n'remark': 'test',\n'invoceNumber': '231321354564654',\n'packingNumber': '1313213254564564df',\n'batchNumber': '',\n'txlogisticId': 'test123',\n'billCode': '',\n'operateType': 1,\n'expectDeliveryStartTime':'2022-09-07 14:53:44',\n'expectDeliveryEndTime':'2022-09-08 14:53:44',\n'goodsType': 'ITN1',\n'totalQuantity': '1',\n'receiver': {\n'area': 'القاهرة',\n'street': 'D',\n'address':'kkk',\n'addressBak': 'FFF',\n'town': 'll',\n'city': 'مدينة نصر',\n'mobile': '01099075241',\n'mailBox': 'ant_li123@qq.com',\n'phone': '034351203',\n'countryCode': 'EGY',\n'name': 'HAGER',\n'alternateReceiverPhoneNo': '12-31321322',\n'company': 'JT',\n'postCode': '54830',\n'prov': 'القاهرة',\n'areaCode': 'A0003324',\n'building': '13',\n'floor': '25',\n'flats': '47',\n},\n'sender': {\n'area': 'الإسكندرية',\n'street': 'jjj',\n'city': 'المنتزه',\n'mobile': '01099075241',\n'mailBox': 'ant_DY@qq.com',\n'phone': '01099075241',\n'countryCode': 'MEX',\n'name': 'MAGDY',\n'company': 'JT',\n'postCode': '16880',\n'prov': 'الإسكندرية',\n'areaCode': 'A0002237',\n'building': '13',\n'floor': '25',\n'flats': '47'\n},\n'width': 10,\n'offerFee':1 ,\n'items': [{\n'englishName': 'test',\n'number': 1,\n'itemType': 'ITN16',\n'itemName': 'file type',\n'priceCurrency': 'DHS',\n'itemValue': '',\n'chineseName': 'test_order',\n'itemUrl': 'http://www.baidu.com',\n'desc': 'test_order'},\n{\n'englishName': 'test',\n'number': 1,\n'itemType': 'ITN16',\n'itemName': 'testy',\n'priceCurrency': 'DHS',\n'chineseName': 'test_order',\n'itemUrl': 'http://www.baidu.com',\n'desc': 'test_order'\n}],\n'sendEndTime': '2022-03-18 14:53:44',\n'height': 60}",
+									"type": "text"
+								}
+							]
+						},
+						"url": "https://openapi.jtjms-eg.com/webopenplatformapi/api/order/addOrder"
+					},
+					"response": []
+				},
+				{
+					"name": "get Orders",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.get(\"variable_key\");"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "apiAccount",
+								"value": "292508153084379141"
+							},
+							{
+								"key": "digest",
+								"value": "+/7/5DWlxusED4oPjSpfcQ=="
+							},
+							{
+								"key": "timestamp",
+								"value": "1646984719909"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "https://demoopenapi.jtjms-eg.com/webopenplatformapi/api/logistics/trace?uuid=9c9275e24a084ba78b4adc02170cf3cb",
+							"protocol": "https",
+							"host": [
+								"demoopenapi",
+								"jtjms-eg",
+								"com"
+							],
+							"path": [
+								"webopenplatformapi",
+								"api",
+								"logistics",
+								"trace"
+							],
+							"query": [
+								{
+									"key": "uuid",
+									"value": "9c9275e24a084ba78b4adc02170cf3cb"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Order",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "apiAccount",
+								"value": "740232391141883913"
+							},
+							{
+								"key": "digest",
+								"value": "ED7zPZmkBanzJdW0Zn86Dg=="
+							},
+							{
+								"key": "timestamp",
+								"value": "1646984719909"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "bizContent",
+									"value": "{\n'customerCode': 'J0086006892',\n'digest': 'cP08AVf/SNk+rER0PFQJxg==',\n'deliveryType': '04',\n'payType': 'PP_PM',\n'expressType': 'EZ',\n'network': '',\n'length': 30,\n'sendStartTime': '2022-03-17 14:53:44',\n'weight': 5.02,\n'itemsValue':'',\n'remark': 'test',\n'invoceNumber': '231321354564654',\n'packingNumber': '1313213254564564df',\n'batchNumber': '',\n'txlogisticId': 'EGYUAT72504945102',\n'billCode': '',\n'operateType': 1,\n'expectDeliveryStartTime':'2022-09-07 14:53:44',\n'expectDeliveryEndTime':'2022-09-08 14:53:44',\n'goodsType': 'ITN1',\n'totalQuantity': '1',\n'receiver': {\n'area': 'القاهرة',\n'street': 'D',\n'address':'kkk',\n'addressBak': 'FFF',\n'town': 'll',\n'city': 'مدينة نصر',\n'mobile': '01099075241',\n'mailBox': 'ant_li123@qq.com',\n'phone': '034351203',\n'countryCode': 'EGY',\n'name': 'HAGER',\n'alternateReceiverPhoneNo': '12-31321322',\n'company': 'JT',\n'postCode': '54830',\n'prov': 'القاهرة',\n'areaCode': 'A0003324',\n'building': '13',\n'floor': '25',\n'flats': '47',\n},\n'sender': {\n'area': 'الإسكندرية',\n'street': 'jjj',\n'city': 'المنتزه',\n'mobile': '01099075241',\n'mailBox': 'ant_DY@qq.com',\n'phone': '01099075241',\n'countryCode': 'MEX',\n'name': 'MAGDY',\n'company': 'JT',\n'postCode': '16880',\n'prov': 'الإسكندرية',\n'areaCode': 'A0002237',\n'building': '13',\n'floor': '25',\n'flats': '47'\n},\n'width': 10,\n'offerFee':1 ,\n'items': [{\n'englishName': 'test',\n'number': 1,\n'itemType': 'ITN16',\n'itemName': 'file type',\n'priceCurrency': 'DHS',\n'itemValue': '',\n'chineseName': 'test_order',\n'itemUrl': 'http://www.baidu.com',\n'desc': 'test_order'},\n{\n'englishName': 'test',\n'number': 1,\n'itemType': 'ITN16',\n'itemName': 'testy',\n'priceCurrency': 'DHS',\n'chineseName': 'test_order',\n'itemUrl': 'http://www.baidu.com',\n'desc': 'test_order'\n}],\n'sendEndTime': '2022-03-18 14:53:44',\n'height': 60}",
+									"type": "text"
+								}
+							]
+						},
+						"url": "https://openapi.jtjms-eg.com/webopenplatformapi/api/order/addOrder"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Order live",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "apiAccount",
+								"value": "749605792625197074"
+							},
+							{
+								"key": "digest",
+								"value": "rJQxyBP/HtgAs9TFnUJaUA=="
+							},
+							{
+								"key": "timestamp",
+								"value": "1646984719909"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "bizContent",
+									"value": "{\n'customerCode': 'J0086006972',\n'digest': '7hqaqXhUvgOh5btHVuvoGA==',\n'deliveryType': '04',\n'payType': 'PP_PM',\n'expressType': 'EZ',\n'network': '',\n'length': 30,\n'sendStartTime': '2022-03-17 14:53:44',\n'weight': 5.02,\n'itemsValue':'',\n'remark': 'test',\n'invoceNumber': '231321354564654',\n'packingNumber': '1313213254564564df',\n'batchNumber': '',\n'txlogisticId': 'EGYUAT72504945102',\n'billCode': '',\n'operateType': 1,\n'expectDeliveryStartTime':'2022-09-07 14:53:44',\n'expectDeliveryEndTime':'2022-09-08 14:53:44',\n'goodsType': 'ITN1',\n'totalQuantity': '1',\n'receiver': {\n'area': 'القاهرة',\n'street': 'D',\n'address':'kkk',\n'addressBak': 'FFF',\n'town': 'll',\n'city': 'مدينة نصر',\n'mobile': '01099075241',\n'mailBox': 'ant_li123@qq.com',\n'phone': '034351203',\n'countryCode': 'EGY',\n'name': 'HAGER',\n'alternateReceiverPhoneNo': '12-31321322',\n'company': 'JT',\n'postCode': '54830',\n'prov': 'القاهرة',\n'areaCode': 'A0003324',\n'building': '13',\n'floor': '25',\n'flats': '47',\n},\n'sender': {\n'area': 'الإسكندرية',\n'street': 'jjj',\n'city': 'المنتزه',\n'mobile': '01099075241',\n'mailBox': 'ant_DY@qq.com',\n'phone': '01099075241',\n'countryCode': 'MEX',\n'name': 'MAGDY',\n'company': 'JT',\n'postCode': '16880',\n'prov': 'الإسكندرية',\n'areaCode': 'A0002237',\n'building': '13',\n'floor': '25',\n'flats': '47'\n},\n'width': 10,\n'offerFee':1 ,\n'items': [{\n'englishName': 'test',\n'number': 1,\n'itemType': 'ITN16',\n'itemName': 'file type',\n'priceCurrency': 'DHS',\n'itemValue': '',\n'chineseName': 'test_order',\n'itemUrl': 'http://www.baidu.com',\n'desc': 'test_order'},\n{\n'englishName': 'test',\n'number': 1,\n'itemType': 'ITN16',\n'itemName': 'testy',\n'priceCurrency': 'DHS',\n'chineseName': 'test_order',\n'itemUrl': 'http://www.baidu.com',\n'desc': 'test_order'\n}],\n'sendEndTime': '2022-03-18 14:53:44',\n'height': 60}",
+									"type": "text"
+								}
+							]
+						},
+						"url": "https://openapi.jtjms-eg.com/webopenplatformapi/api/order/addOrder"
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel Order",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "apiAccount",
+								"value": "292508153084379141"
+							},
+							{
+								"key": "digest",
+								"value": "3UCXGB8JoG1i7U0k3fyRsA=="
+							},
+							{
+								"key": "timestamp",
+								"value": "1646984719909"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "bizContent",
+									"value": "{\n'txlogisticId': 'test123',\n'orderType': 1,\n'reason': 'test',\n'customerCode': 'J0086006972',\n'digest': '7hqaqXhUvgOh5btHVuvoGA=='\n}",
+									"type": "text"
+								}
+							]
+						},
+						"url": "https://demoopenapi.jtjms-eg.com/webopenplatformapi/api/order/cancelOrder"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Address",
+			"item": [
+				{
+					"name": "Import Clients and Companies from File",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "addresses",
+									"type": "file",
+									"src": "/C:/Users/Mahmoud/Desktop/Administrative divisions.csv"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/addresses/importCSV/?start=1&start=30",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"addresses",
+								"importCSV",
+								""
+							],
+							"query": [
+								{
+									"key": "start",
+									"value": "1"
+								},
+								{
+									"key": "addresses",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "start",
+									"value": "30"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Addresses",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n    \"Province\": \"البحيرة\",\r\n    \"City\": \"المحمودية\",\r\n    \"enabled\":\"0\"  // optional  \"0\" or \"1\"\r\n    \r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:3000/api/v1/addresses/seprated"
+					},
+					"response": []
+				},
+				{
+					"name": "Enable ,Disable Address Status",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n    \"Province\": \"البحيرة\",\r\n    \"City\": \"المحمودية\",\r\n    \"Area\":\"العطف\",\r\n    \"enabled\":\"0\" //disabled\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:3000/api/v1/addresses/changestatus"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": \"userName,\",\r\n      \"password\": \"password\",\r\n      \"role\": \"admin\"//,\"user\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{localhost}}/users"
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": \"userxxxName,\",\r\n      \"password\": \"pasxxxxsword\",\r\n      \"role\": \"admin\"//,\"user\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{localhost}}/users/67b48b0f811429ddea7d7f8b"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{localhost}}/users"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": \"userName,\",\r\n      \"password\": \"password\",\r\n      \"role\": \"admin\"//,\"user\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{localhost}}/users/67b48b0f811429ddea7d7f8b"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "reviews",
+					"item": [
+						{
+							"name": "Get All",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "{{localhost}}/products/67bccf97d631f82a35a5be0d/reviews"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Reviews by Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{localhost}}/product/:id/reviews:id",
+									"host": [
+										"{{localhost}}"
+									],
+									"path": [
+										"product",
+										":id",
+										"reviews:id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\":\"mo\",\r\n    \"rating\":4,\r\n    \"comment\":\"xyz\"\r\n\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{localhost}}/products/67bccf97d631f82a35a5be0d/reviews"
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\":\"mo\",\r\n    \"rating\":4,\r\n    \"comment\":\"xyz\"\r\n\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{localhost}}/products/67bccf97d631f82a35a5be11/reviews/67bccf97d631f82a35a5be0d"
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": "{{localhost}}/products/67bccf97d631f82a35a5be0d/reviews/67bcd8123a8b941455ccb713"
+							},
+							"response": []
+						}
+					],
+					"description": "productReviews.js"
+				},
+				{
+					"name": "Variants",
+					"item": [
+						{
+							"name": "Bar Code",
+							"item": [
+								{
+									"name": "Increase Stock of a Variant",
+									"request": {
+										"method": "PATCH",
+										"header": [],
+										"url": "{{localhost}}/products/variants/BARm7jjqkvrIC3T/add-stock"
+									},
+									"response": []
+								},
+								{
+									"name": "Decrease Stock of a Variant",
+									"request": {
+										"method": "PATCH",
+										"header": [],
+										"url": "{{localhost}}/products/variants/BARm7jjqkvrIC3T/decrease-stock"
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Get All of Product",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "{{localhost}}/products/67bccf97d631f82a35a5be0d/variants/"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Variants By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "{{localhost}}/products/67bccf97d631f82a35a5be11/variants/"
+							},
+							"response": []
+						},
+						{
+							"name": "Add",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"color\":\"mo\",\r\n    \"size\":\"xl\",\r\n    \"stock\":1\r\n\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{localhost}}/products/67bccf97d631f82a35a5be0d/variants/"
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\":\"mo\",\r\n    \"rating\":4,\r\n    \"comment\":\"xyz\"\r\n\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{localhost}}/products/67bccf97d631f82a35a5be11/reviews/67bccf97d631f82a35a5be0d"
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": "{{localhost}}/products/67bccf97d631f82a35a5be0d/reviews/67bcd8123a8b941455ccb713"
+							},
+							"response": []
+						}
+					],
+					"description": "productReviews.js"
+				},
+				{
+					"name": "Products",
+					"item": [
+						{
+							"name": "Get All with filters",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{localhost}}/products/?maxPrice=1200&sort=ratings",
+									"host": [
+										"{{localhost}}"
+									],
+									"path": [
+										"products",
+										""
+									],
+									"query": [
+										{
+											"key": "category",
+											"value": "67bccc8cc6067b12d695cb2c",
+											"disabled": true
+										},
+										{
+											"key": "minPrice",
+											"value": "0",
+											"disabled": true
+										},
+										{
+											"key": "maxPrice",
+											"value": "1200"
+										},
+										{
+											"key": "isFeatured",
+											"value": "",
+											"disabled": true
+										},
+										{
+											"key": "sort",
+											"value": "ratings"
+										},
+										{
+											"key": "page",
+											"value": "0",
+											"disabled": true
+										},
+										{
+											"key": "limit ",
+											"value": "1",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Product By Id",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{localhost}}/products/67bccf97d631f82a35a5be0d"
+							},
+							"response": []
+						},
+						{
+							"name": "Add",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "w2w Air Max 270",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "A lightweight and stylish running shoe with great",
+											"type": "text"
+										},
+										{
+											"key": "price",
+											"value": "14444",
+											"type": "text"
+										},
+										{
+											"key": "discount",
+											"value": "10",
+											"type": "text"
+										},
+										{
+											"key": "badge",
+											"value": "خصم 14 %",
+											"type": "text"
+										},
+										{
+											"key": "category",
+											"value": "67bccf69d631f82a35a5be0a",
+											"type": "text"
+										},
+										{
+											"key": "mainImage",
+											"type": "file",
+											"src": "/C:/Users/Mahmoud/Desktop/470472891_2479728665692269_9098363582635396089_n.jpg"
+										},
+										{
+											"key": "images",
+											"type": "file",
+											"src": [
+												"/C:/Users/Mahmoud/Desktop/lotary1.jpg",
+												"/C:/Users/Mahmoud/Desktop/me.jpg"
+											]
+										},
+										{
+											"key": "ratings",
+											"value": "{\n    \"average\": 4.5,\n    \"count\": 200\n  }",
+											"type": "text"
+										},
+										{
+											"key": "isFeatured",
+											"value": "true",
+											"type": "text"
+										},
+										{
+											"key": "isDeleted",
+											"value": "false",
+											"type": "text"
+										},
+										{
+											"key": "variants[0][color]",
+											"value": "Black",
+											"type": "text"
+										},
+										{
+											"key": "variants[0][size]",
+											"value": "M",
+											"type": "text"
+										},
+										{
+											"key": "reviews[0][rating]",
+											"value": "5",
+											"type": "text"
+										},
+										{
+											"key": "reviews[0][comment]",
+											"value": "good product",
+											"type": "text"
+										},
+										{
+											"key": "variants[0][stock]",
+											"value": "5",
+											"type": "text"
+										},
+										{
+											"key": "tags[0]",
+											"value": "حاجات حلوه",
+											"type": "text"
+										},
+										{
+											"key": "isActive",
+											"value": "true",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": "{{localhost}}/products/"
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "stock",
+											"value": "50",
+											"type": "text"
+										},
+										{
+											"key": "images",
+											"type": "file",
+											"src": [
+												"/C:/Users/Mahmoud/Desktop/lotary1.jpg",
+												"/C:/Users/Mahmoud/Desktop/me.jpg"
+											]
+										}
+									]
+								},
+								"url": "{{localhost}}/products/67bb45057db916731514db19"
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"txlogisticId\": \"test123\",\r\n    \"length\": 30,\r\n    \"weight\": 5.02,\r\n    \"itemsValue\": \"555\",\r\n    \"remark\": \"test\",\r\n    \"billCode\": \"\", ////////////////////\r\n    \"goodsType\": \"ITN1\",\r\n    \"totalQuantity\": \"1\",\r\n    \"width\": 10,\r\n    \"height\": 60,\r\n    \"offerFee\": 1,\r\n    \"receiver\": {\r\n        \"area\": \"القاهرة\",\r\n        \"street\": \"D\",\r\n        \"address\": \"kkk\",\r\n        \"addressBak\": \"FFF\",\r\n        \"town\": \"ll\",\r\n        \"city\": \"مدينة نصر\",\r\n        \"mobile\": \"01099075241\",\r\n        \"mailBox\": \"ant_li123@qq.com\",\r\n        \"phone\": \"034351203\",\r\n        \"countryCode\": \"EGY\",\r\n        \"name\": \"HAGER\",\r\n        \"alternateReceiverPhoneNo\": \"12-31321322\",\r\n        \"company\": \"JT\",\r\n        \"postCode\": \"54830\",\r\n        \"prov\": \"القاهرة\",\r\n        \"areaCode\": \"A0003324\",\r\n        \"building\": \"13\",\r\n        \"floor\": \"25\",\r\n        \"flats\": \"47\"\r\n    },\r\n    \"items\": [\r\n        {\r\n            \"englishName\": \"test\",\r\n            \"number\": 1,\r\n            \"itemType\": \"ITN16\",\r\n            \"itemName\": \"file type\",\r\n            \"priceCurrency\": \"DHS\",\r\n            \"itemValue\": \"\",\r\n            \"chineseName\": \"test_order\",\r\n            \"itemUrl\": \"http://www.baidu.com\",\r\n            \"desc\": \"test_order\"\r\n        },\r\n        {\r\n            \"englishName\": \"test\",\r\n            \"number\": 1,\r\n            \"itemType\": \"ITN16\",\r\n            \"itemName\": \"testy\",\r\n            \"priceCurrency\": \"DHS\",\r\n            \"chineseName\": \"test_order\",\r\n            \"itemUrl\": \"http://www.baidu.com\",\r\n            \"desc\": \"test_order\"\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{localhost}}/products/67bccc8cc6067b12d695cb2c/reviews/67bccc8cc6067b12d695cb30"
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Visitors Orders",
+			"item": [
+				{
+					"name": "Get All Unconfirmed",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{localhost}}/visitors/orders/"
+					},
+					"response": []
+				},
+				{
+					"name": "Get By Id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{localhost}}/visitors/orders/67b4df4dc66bac6bdffaa458"
+					},
+					"response": []
+				},
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"txlogisticId\": \"test123\",\r\n    \"length\": 30,\r\n    \"weight\": 5.02,\r\n    \"itemsValue\": \"555\",\r\n    \"remark\": \"test\",\r\n    \"billCode\": \"\", ////////////////////\r\n    \"goodsType\": \"ITN1\",\r\n    \"totalQuantity\": \"1\",\r\n    \"width\": 10,\r\n    \"height\": 60,\r\n    \"offerFee\": 1,\r\n    \"receiver\": {\r\n        \"area\": \"القاهرة\",\r\n        \"street\": \"D\",\r\n        \"address\": \"kkk\",\r\n        \"addressBak\": \"FFF\",\r\n        \"town\": \"ll\",\r\n        \"city\": \"مدينة نصر\",\r\n        \"mobile\": \"01099075241\",\r\n        \"mailBox\": \"ant_li123@qq.com\",\r\n        \"phone\": \"034351203\",\r\n        \"countryCode\": \"EGY\",\r\n        \"name\": \"HAGER\",\r\n        \"alternateReceiverPhoneNo\": \"12-31321322\",\r\n        \"company\": \"JT\",\r\n        \"postCode\": \"54830\",\r\n        \"prov\": \"القاهرة\",\r\n        \"areaCode\": \"A0003324\",\r\n        \"building\": \"13\",\r\n        \"floor\": \"25\",\r\n        \"flats\": \"47\"\r\n    },\r\n    \"items\": [\r\n        {\r\n            \"englishName\": \"test\",\r\n            \"number\": 1,\r\n            \"itemType\": \"ITN16\",\r\n            \"itemName\": \"file type\",\r\n            \"priceCurrency\": \"DHS\",\r\n            \"itemValue\": \"\",\r\n            \"chineseName\": \"test_order\",\r\n            \"itemUrl\": \"http://www.baidu.com\",\r\n            \"desc\": \"test_order\"\r\n        },\r\n        {\r\n            \"englishName\": \"test\",\r\n            \"number\": 1,\r\n            \"itemType\": \"ITN16\",\r\n            \"itemName\": \"testy\",\r\n            \"priceCurrency\": \"DHS\",\r\n            \"chineseName\": \"test_order\",\r\n            \"itemUrl\": \"http://www.baidu.com\",\r\n            \"desc\": \"test_order\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{localhost}}/visitors/orders/"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"txlogisticId\": \"test123\",\r\n    \"length\": 30,\r\n    \"weight\": 5.02,\r\n    \"itemsValue\": \"555\",\r\n    \"remark\": \"test\",\r\n    \"billCode\": \"\", ////////////////////\r\n    \"goodsType\": \"ITN1\",\r\n    \"totalQuantity\": \"1\",\r\n    \"width\": 10,\r\n    \"height\": 60,\r\n    \"offerFee\": 1,\r\n    \"receiver\": {\r\n        \"area\": \"القاهرة\",\r\n        \"street\": \"D\",\r\n        \"address\": \"kkk\",\r\n        \"addressBak\": \"FFF\",\r\n        \"town\": \"ll\",\r\n        \"city\": \"مدينة نصر\",\r\n        \"mobile\": \"01099075241\",\r\n        \"mailBox\": \"ant_li123@qq.com\",\r\n        \"phone\": \"034351203\",\r\n        \"countryCode\": \"EGY\",\r\n        \"name\": \"HAGER\",\r\n        \"alternateReceiverPhoneNo\": \"12-31321322\",\r\n        \"company\": \"JT\",\r\n        \"postCode\": \"54830\",\r\n        \"prov\": \"القاهرة\",\r\n        \"areaCode\": \"A0003324\",\r\n        \"building\": \"13\",\r\n        \"floor\": \"25\",\r\n        \"flats\": \"47\"\r\n    },\r\n    \"items\": [\r\n        {\r\n            \"englishName\": \"test\",\r\n            \"number\": 1,\r\n            \"itemType\": \"ITN16\",\r\n            \"itemName\": \"file type\",\r\n            \"priceCurrency\": \"DHS\",\r\n            \"itemValue\": \"\",\r\n            \"chineseName\": \"test_order\",\r\n            \"itemUrl\": \"http://www.baidu.com\",\r\n            \"desc\": \"test_order\"\r\n        },\r\n        {\r\n            \"englishName\": \"test\",\r\n            \"number\": 1,\r\n            \"itemType\": \"ITN16\",\r\n            \"itemName\": \"testy\",\r\n            \"priceCurrency\": \"DHS\",\r\n            \"chineseName\": \"test_order\",\r\n            \"itemUrl\": \"http://www.baidu.com\",\r\n            \"desc\": \"test_order\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{localhost}}/visitors/orders/67b4e2b01bc5a27191cf7e9d"
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"length\": 30,\r\n    \"weight\": 5.02,\r\n    \"itemsValue\": \"555\",\r\n    \"remark\": \"test\",\r\n    \"goodsType\": \"ITN1\",\r\n    \"totalQuantity\": \"1\",\r\n    \"width\": 10,\r\n    \"height\": 60,\r\n    \"offerFee\": 1,\r\n    \"receiver\": {\r\n        \"area\": \"القاهرة\",\r\n        \"street\": \"D\",\r\n        \"address\": \"kkk\",\r\n        \"addressBak\": \"FFF\",\r\n        \"town\": \"ll\",\r\n        \"city\": \"مدينة نصر\",\r\n        \"mobile\": \"01099075241\",\r\n        \"mailBox\": \"ant_li123@qq.com\",\r\n        \"phone\": \"034351203\",\r\n        \"countryCode\": \"EGY\",\r\n        \"name\": \"HAGER\",\r\n        \"alternateReceiverPhoneNo\": \"12-31321322\",\r\n        \"company\": \"JT\",\r\n        \"postCode\": \"54830\",\r\n        \"prov\": \"القاهرة\",\r\n        \"areaCode\": \"A0003324\",\r\n        \"building\": \"13\",\r\n        \"floor\": \"25\",\r\n        \"flats\": \"47\"\r\n    },\r\n    \"items\": [\r\n        {\r\n            \"englishName\": \"test\",\r\n            \"number\": 1,\r\n            \"itemType\": \"ITN16\",\r\n            \"itemName\": \"file type\",\r\n            \"priceCurrency\": \"DHS\",\r\n            \"itemValue\": \"\",\r\n            \"chineseName\": \"test_order\",\r\n            \"itemUrl\": \"http://www.baidu.com\",\r\n            \"desc\": \"test_order\"\r\n        },\r\n        {\r\n            \"englishName\": \"txxxest\",\r\n            \"number\": 1,\r\n            \"itemType\": \"ITN16\",\r\n            \"itemName\": \"testy\",\r\n            \"priceCurrency\": \"DHS\",\r\n            \"chineseName\": \"test_order\",\r\n            \"itemUrl\": \"http://www.baidu.com\",\r\n            \"desc\": \"test_order\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{localhost}}/visitors/orders/67b4df4dc66bac6bdffaa458"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "JNT Orders",
+			"item": [
+				{
+					"name": "Get By Id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{localhost}}/jnt/orders/67b4df4dc66bac6bdffaa458"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Confirmed",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{localhost}}/jnt/orders/"
+					},
+					"response": []
+				},
+				{
+					"name": "Track Single",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{localhost}}/jnt/orders/track/67b9feba60f8678956eaa268"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Direct Order to  JNT",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"txlogisticId\": \"test123\",\r\n    \"length\": 30,\r\n    \"weight\": 5.02,\r\n    \"itemsValue\": \"555\",\r\n    \"remark\": \"test\",\r\n    \"billCode\": \"\", ////////////////////\r\n    \"goodsType\": \"ITN1\",\r\n    \"totalQuantity\": \"1\",\r\n    \"width\": 10,\r\n    \"height\": 60,\r\n    \"offerFee\": 1,\r\n    \"receiver\": {\r\n        \"area\": \"القاهرة\",\r\n        \"street\": \"D\",\r\n        \"address\": \"kkk\",\r\n        \"addressBak\": \"FFF\",\r\n        \"town\": \"ll\",\r\n        \"city\": \"مدينة نصر\",\r\n        \"mobile\": \"01099075241\",\r\n        \"mailBox\": \"ant_li123@qq.com\",\r\n        \"phone\": \"034351203\",\r\n        \"countryCode\": \"EGY\",\r\n        \"name\": \"HAGER\",\r\n        \"alternateReceiverPhoneNo\": \"12-31321322\",\r\n        \"company\": \"JT\",\r\n        \"postCode\": \"54830\",\r\n        \"prov\": \"القاهرة\",\r\n        \"areaCode\": \"A0003324\",\r\n        \"building\": \"13\",\r\n        \"floor\": \"25\",\r\n        \"flats\": \"47\"\r\n    },\r\n    \"items\": [\r\n        {\r\n            \"englishName\": \"test\",\r\n            \"number\": 1,\r\n            \"itemType\": \"ITN16\",\r\n            \"itemName\": \"file type\",\r\n            \"priceCurrency\": \"DHS\",\r\n            \"itemValue\": \"\",\r\n            \"chineseName\": \"test_order\",\r\n            \"itemUrl\": \"http://www.baidu.com\",\r\n            \"desc\": \"test_order\"\r\n        },\r\n        {\r\n            \"englishName\": \"test\",\r\n            \"number\": 1,\r\n            \"itemType\": \"ITN16\",\r\n            \"itemName\": \"testy\",\r\n            \"priceCurrency\": \"DHS\",\r\n            \"chineseName\": \"test_order\",\r\n            \"itemUrl\": \"http://www.baidu.com\",\r\n            \"desc\": \"test_order\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{localhost}}/jnt/orders/"
+					},
+					"response": []
+				},
+				{
+					"name": "Confirm",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": "{{localhost}}/jnt/orders/67b9f00f7a1deea3d826ab2b"
+					},
+					"response": []
+				},
+				{
+					"name": "Print",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n    \"printCod\":0,\r\n    \"printSize\":0,\r\n    \"showCustomerOrderId\":0\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{localhost}}/jnt/orders/print/67b9feba60f8678956eaa268"
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{localhost}}/jnt/orders/67b9feba60f8678956eaa268"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Helpers",
+			"item": [
+				{
+					"name": "Consts",
+					"item": [
+						{
+							"name": "Get by Value or All",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{acesstoken Accumen 1 year}}"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": "{{url}}/helpers/consts/"
+							},
+							"response": []
+						},
+						{
+							"name": "Add New",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\":\"Email From\",\r\n    \"value\":\"no-reply@acumenportal.co.uk\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{url}}/helpers/consts"
+							},
+							"response": []
+						},
+						{
+							"name": "Update By Id",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\":\"Email From1\",\r\n\"value\": \"<p>no-reply@acumenportal.co.uk</p>\" \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{url}}/helpers/consts/67814b0014e9a70728fb7fbc"
+							},
+							"response": []
+						},
+						{
+							"name": "Delete By Id",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": "{{url}}/helpers/consts/67814b0014e9a70728fb7fbc"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Others",
+					"item": []
+				}
+			]
+		},
+		{
+			"name": "Categories",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{localhost}}/categories/"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Category by Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{localhost}}/categories/67bcca9614db069e85fc30eb"
+					},
+					"response": []
+				},
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Cat1",
+									"type": "text"
+								},
+								{
+									"key": "icon",
+									"type": "file",
+									"src": "/C:/Users/Mahmoud/Desktop/me.jpg"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/Mahmoud/Desktop/lotary1.jpg"
+								},
+								{
+									"key": "category",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": "{{localhost}}/categories/"
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Cat1updated",
+									"type": "text"
+								},
+								{
+									"key": "icon",
+									"type": "file",
+									"src": "/C:/Users/Mahmoud/Desktop/lotary2.jpg",
+									"disabled": true
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/Mahmoud/Desktop/lotary1.jpg",
+									"disabled": true
+								},
+								{
+									"key": "category",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": "{{localhost}}/categories/67bcc30c08860e9a8460983e"
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{localhost}}/categories/67bcca9614db069e85fc30eb"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

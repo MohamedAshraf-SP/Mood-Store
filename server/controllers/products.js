@@ -1,23 +1,29 @@
 import { Product } from "./../models/products.js";
 import { generateBarcode } from "../utils/generators/generators.js";
 import { Category } from "../models/categories.js";
+import { deleteFileWithPath } from "../utils/helpers/deleteFile.js";
 
 
 export const addProduct = async (req, res) => {
     try {
         const Cat = await Category.findById(req.body.category)
-        if(!Cat){
+        // console.log(req.files);
+        if (!Cat) {
             return res.status(400).json({ error: "برجاء اختيار تصنيف صحيح" });
         }
 
+        // console.log(req.files);
 
-        const variants = req.body.variants ? req.body.variants.map((variant) => ({
-            barCode: generateBarcode(),
-            size: variant.size,
-            color: variant.color,
-            stock: variant.stock,
+        const variants = req.body.variants ? req.body.variants.map((variant) => {
+            const normalizedVariant = Object.assign({}, variant);
+            return {
+                barCode: generateBarcode(),
+                size: normalizedVariant.size,
+                color: normalizedVariant.color,
+                stock: normalizedVariant.stock,
 
-        })) : [{
+            }
+        }) : [{
             barCode: generateBarcode(),
             price: 1,
             size: "لايوجد",
@@ -26,14 +32,18 @@ export const addProduct = async (req, res) => {
 
         }]
 
-        //  console.log(variants);
-        console.log(req.files.mainImage);
+        // console.log(variants);
+        /// console.log(req.files.mainImage);
 
 
         if (!req.files) return res.status(400).json({ error: "error" });
 
 
-        const images = req.files ? req.files.images.map(image => ({ url: image.path, alt: req.body.name || "product picture" })) : [];
+        const images = req.files ? req.files.images.map(image => {
+            const normalizedImage = Object.assign({}, image);
+            return { url: normalizedImage.path, alt: req.body.name || "product picture" }
+        }) : [];
+
 
 
         const productData = {
@@ -52,7 +62,7 @@ export const addProduct = async (req, res) => {
             // MongoDB duplicate key error
             return res.status(400).json({ message: "Barcode must be unique!" });
         }
-        res.status(400).json({ error: error.message });
+        res.status(400).json({ error: error });
     }
 }
 
@@ -88,9 +98,9 @@ export const getProducts = async (req, res) => {
 
 export const getProductById = async (req, res) => {
     try {
-        console.log(req.params.id);
+        // console.log(req.params.id);
         const product = await Product.findById(req.params.id)//.populate("category");
-        if (!product || product.isDeleted) return res.status(404).json({ message: "المنتج غير موجود." });
+        if (!product || product.isDeleted) return res.status(404).json({ message: "Product not found" });
         res.json(product);
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -102,19 +112,30 @@ export const updateProduct = async (req, res) => {
 
     try {
         const product = await Product.findById(req.params.id)
-        const images = req.files ? req.files.map(image => ({ url: image.path, alt: req.body.name || "product picture" })) : []
-        console.log(images, req.files);
-        if (images.length > 0) {
-            console.log("there is no images", images);
-            product.images = images
+        if (!product) {
+            return res.status(404).json({ error: "Product not found" });
         }
+        if (req.files?.images) {
+        //delete old images
+        
+        product.images.forEach(image => {
+                    deleteFileWithPath(image.url)
+                });
 
-
-        Object.assign(product, req.body);
+            product.images = req.files.images ? req.files.images.map(image => {
+                return { url: image.path, alt: req.body.name || "product picture" }
+            }) : [...product.images]
+        }
+        if (req.files?.mainImage) {
+            deleteFileWithPath(product.mainImage.url)
+            product.mainImage = req.files.mainImage ?
+                { url: req.files.mainImage[0].path, alt: req.body.name || "product picture" } : product.mainImage
+        }
         await product.save();
 
         res.json(product);
     } catch (error) {
+        // console.log(error);
         res.status(400).json({ error: error.message });
     }
 
@@ -124,7 +145,7 @@ export const updateProduct = async (req, res) => {
 export const deleteProduct = async (req, res) => {
     try {
         const product = await Product.findByIdAndUpdate(req.params.id, { isDeleted: true }, { new: true });
-        if (!product) return res.status(404).json({ message: "المنتج غير موجود." });
+        if (!product) return res.status(404).json({ message: "Product not found" });
         res.json({ message: "Product deleted (soft delete)", product });
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -178,7 +199,7 @@ export const updateStockByBarcode = async (req, res) => {
 // export const deleteProduct = async (req, res) => {
 //     try {
 //         const product = await Product.findByIdAndDelete(req.params.id);
-//         if (!product) return res.status(404).json({ message: "المنتج غير موجود." });
+//         if (!product) return res.status(404).json({ message: "Product not found" });
 //         res.json({ message: "Product permanently deleted" });
 //     } catch (error) {
 //         res.status(500).json({ error: error.message });

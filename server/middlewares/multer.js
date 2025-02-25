@@ -12,17 +12,17 @@ const urlParsingLastWord = (url) => {
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        req.lastword = urlParsingLastWord(req.baseUrl)
+        req.lastword = urlParsingLastWord(req.baseUrl || "")
         const uploadPath = `uploads/${req.lastword}`
-
+        // console.log("MULTER");
         if (!fs.existsSync(uploadPath)) {
-            fs.mkdirSync(uploadPath); // Create the directory recursively
+            fs.mkdirSync(uploadPath, { recursive: true }); // Create the directory recursively
         }
-
 
         cb(null, uploadPath); // Folder where files will be saved
     },
     filename: (req, file, cb) => {
+        // console.log("MULTER");
         const uniqueSuffix = '_' + Date.now();
         cb(null, '' + req.lastword + "_" + uniqueSuffix + "_" + file.originalname); // Preserve original file extension
     }

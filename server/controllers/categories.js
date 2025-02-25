@@ -1,16 +1,18 @@
 import { Category } from "../models/categories.js";
 import { Product } from "../models/products.js";
+import { deleteFileWithPath } from "../utils/helpers/deleteFile.js";
 
 const addCategory = async (req, res) => {
     try {
+
+        if (!req.files.icon || !req.files.image) {
+            return res.status(400).json({ message: "يرجي ارفاق الصور." })
+        }
         const data = {
             ...req.body,
             icon: { url: req.files.icon[0].path, alt: req.body.name || "Category icon" },
             image: { url: req.files.image[0].path, alt: req.body.name || "Category image" }
         }
-
-
-
 
         const newCategory = new Category(data);
         await newCategory.save();
@@ -41,12 +43,19 @@ const getCategoryById = async (req, res) => {
 
 const updateCategory = async (req, res) => {
     try {
+        const category = await Category.findById(req.params.id)
+        if (!category) {
+            return res.status(400).json({ message: "تصنيف غير موجود" })
+        }
         const data = { ...req.body }
 
         if (req.files && req.files.icon) {
+
+            deleteFileWithPath(category.icon.url)
             data.icon = { url: req.files.icon[0].path, alt: req.body.name || "Category icon" };
         }
         if (req.files && req.files.image) {
+            deleteFileWithPath(category.image.url)
             data.image = { url: req.files.image[0].path, alt: req.body.name || "Category image" };
         }
 
@@ -69,7 +78,7 @@ const deleteCategory = async (req, res) => {
         const checkProducts = await Product.findOne({ category: req.params.id, isDeleted: false });
         const checkCategories = await Category.findOne({ category: { "$in": [`${req.params.id}`] } });
 
-        console.log(checkCategories, checkProducts);
+        // console.log(checkCategories, checkProducts);
 
         if (checkCategories || checkProducts) return res.status(404).json({ message: "cant delete category associated with another Category or product" });
 
