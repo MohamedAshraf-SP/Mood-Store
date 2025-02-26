@@ -76,7 +76,7 @@ const deleteCategory = async (req, res) => {
 
 
         const checkProducts = await Product.findOne({ category: req.params.id, isDeleted: false });
-        const checkCategories = await Category.findOne({ category: { "$in": [`${req.params.id}`] } });
+        const checkCategories = await Category.findOne({ category: req.params.id });
 
         // console.log(checkCategories, checkProducts);
 

@@ -6,13 +6,13 @@ import { run } from "./config/databaseConnection.js";
 import cookieParser from "cookie-parser";
 
 
-/*
-import path from 'path';
+
+import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
-Get the filename and directory
+//Get the filename and directory
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-*/
+
 
 dotenv.config();
 
@@ -29,6 +29,11 @@ const corsOptions = {
   allowedHeaders: ['Content-Type', 'Authorization'],
   optionsSuccessStatus: 200,
 };
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+///console.log(path.join(__dirname, 'uploads'));
+
+
 
 app.use(cors(corsOptions));
 
@@ -48,6 +53,11 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use("/api", router);
+
+
+app.use("*", (req, res) => {
+  res.status(404).send("ERROR  404   Page not found!!")
+});
 
 
 
