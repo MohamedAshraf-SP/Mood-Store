@@ -27,7 +27,12 @@ export const getUsers = async (req, res) => {
 // Add a new user
 export const addUser = async (req, res) => {
   try {
-    
+
+    const currentUsers = await User.find({ userName: req.body.userName });
+    //console.log(currentUsers);
+    if (currentUsers.length > 0) {
+      return res.status(400).json({ message: "another user uses this name" })
+    }
     const newUser = new User({
       userName: req.body.userName,
       password: req.body.password,
@@ -58,8 +63,21 @@ export const deleteUser = async (req, res) => {
 // Update a user by ID
 export const updateUser = async (req, res) => {
   try {
+
+
+    const currentUsers = await User.find({ userName: req.body.userName, _id: { $ne: req.params.id } });
+    if (currentUsers.length > 0) {
+      return res.status(400).json({ message: "another user uses this name" })
+    }
     const { id } = req.params; // Assuming you use ID to find the user
-    const updatedUser = await User.findByIdAndUpdate(id, req.body, {
+    const data = {
+
+      userName: req.body.userName,
+      password: req.body.password,
+      userRole: req.body.role
+
+    }
+    const updatedUser = await User.findByIdAndUpdate(id, data, {
       new: true,
     });
     if (!updatedUser) {
