@@ -30,9 +30,9 @@ const productSchema = new mongoose.Schema({
         type: Number, required: true, default: 0,
         validate: {
             validator: function (price) {
-                return (price > 1 && price < 9999)// Ensure at least one variant exists
+                return (price > 1 && price < 999999)// Ensure at least one variant exists
             },
-            message: "\nلا يمكن ان يكون السعر اقل من1 و اكثر من9999 \n",
+            message: "\nلا يمكن ان يكون السعر اقل من1 و اكثر من999999 \n",
         }
     },
     discount: { type: Number, required: true, default: 0 },
@@ -81,6 +81,11 @@ const productSchema = new mongoose.Schema({
 
 productSchema.virtual("sumStocks").get(function () {
     return this.variants.reduce((total, variant) => total + variant.stock, 0);
+});
+
+
+productSchema.virtual("actualPrice").get(function () {
+    return (this.price + (this.price * this.discout / 100));
 });
 
 // Pre-save middleware to recalculate stock before saving
