@@ -8,6 +8,6 @@ import {
 
 export const authRoute = express.Router();
 
-authRoute.get("/login", login);
-authRoute.get("/refreshToken", refreshToken);
+authRoute.post("/login", login);
+authRoute.post("/refreshToken", refreshToken);
 authRoute.get("/logout", logout);
