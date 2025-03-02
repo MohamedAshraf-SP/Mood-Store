@@ -1,4 +1,5 @@
 import User from "../models/user.js"; // Import the user model
+import { hashPassword } from "../utils/generators/authentication.js";
 
 
 // Get a user by ID
@@ -29,13 +30,18 @@ export const addUser = async (req, res) => {
   try {
 
     const currentUsers = await User.find({ userName: req.body.userName });
-    //console.log(currentUsers);
+
     if (currentUsers.length > 0) {
       return res.status(400).json({ message: "another user uses this name" })
+
     }
+
+    const hashedPassword = await hashPassword(req.body.password)
+
+
     const newUser = new User({
       userName: req.body.userName,
-      password: req.body.password,
+      password: hashedPassword,
       userRole: req.body.role,
     });
 
@@ -64,19 +70,21 @@ export const deleteUser = async (req, res) => {
 export const updateUser = async (req, res) => {
   try {
 
+    const { id } = req.params; 
+    const currentUsers = await User.findOne({ userName: req.body.userName, _id: { $ne: req.params.id } });
 
-    const currentUsers = await User.find({ userName: req.body.userName, _id: { $ne: req.params.id } });
-    if (currentUsers.length > 0) {
+    if (currentUsers) {
       return res.status(400).json({ message: "another user uses this name" })
     }
-    const { id } = req.params; // Assuming you use ID to find the user
     const data = {
-
       userName: req.body.userName,
-      password: req.body.password,
-      userRole: req.body.role
-
+      userRole: req.body.userRole
     }
+
+    if (req.body?.password) {
+      data.password = await hashPassword(req.body.password)
+    }
+
     const updatedUser = await User.findByIdAndUpdate(id, data, {
       new: true,
     });

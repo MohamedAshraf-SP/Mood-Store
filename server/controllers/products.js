@@ -1,7 +1,8 @@
-import { Product } from "./../models/products.js";
+import { Product, ProductVariants } from "./../models/products.js";
 import { generateBarcode } from "../utils/generators/generators.js";
 import { Category } from "../models/categories.js";
 import { deleteFileWithPath } from "../utils/helpers/deleteFile.js";
+import { getCountOfSchema } from "../services/general.js";
 
 
 export const addProduct = async (req, res) => {
@@ -12,7 +13,9 @@ export const addProduct = async (req, res) => {
             return res.status(400).json({ error: "برجاء اختيار تصنيف صحيح" });
         }
 
-        // console.log(req.files);
+        // if (!req.files) {
+        //     return res.status(400).json({ error: "برجاء ارفاق  صور." });
+        // }
 
         const variants = req.body.variants ? req.body.variants.map((variant) => {
             const normalizedVariant = Object.assign({}, variant);
@@ -62,7 +65,7 @@ export const addProduct = async (req, res) => {
             // MongoDB duplicate key error
             return res.status(400).json({ message: "Barcode must be unique!" });
         }
-        res.status(400).json({ error: error });
+        res.status(400).json({ error: error.message });
     }
 }
 
@@ -100,6 +103,8 @@ export const getProductById = async (req, res) => {
     try {
         // console.log(req.params.id);
         const product = await Product.findById(req.params.id)//.populate("category");
+        console.log(product);
+
         if (!product || product.isDeleted) return res.status(404).json({ message: "Product not found" });
         res.json(product);
     } catch (error) {
@@ -115,22 +120,27 @@ export const updateProduct = async (req, res) => {
         if (!product) {
             return res.status(404).json({ error: "Product not found" });
         }
-        if (req.files?.images) {
-        //delete old images
-        
-        product.images.forEach(image => {
-                    deleteFileWithPath(image.url)
-                });
+        if (req.body?.removedImagesPaths) {
+            // Remove images from the product
+            product.images = product.images.filter(image => !req.body.removedImagesPaths.includes(image.url));
 
-            product.images = req.files.images ? req.files.images.map(image => {
-                return { url: image.path, alt: req.body.name || "product picture" }
-            }) : [...product.images]
+
+            // Delete images from storage (optional)
+            req.body.removedImagesPaths.forEach(imagePath => {
+                console.log(deleteFileWithPath(imagePath))
+            });
         }
+
+        product.images = req.files?.images ? [...product.images,...req.files.images.map(image => {
+            return { url: image.path, alt: req.body.name || "product picture" }
+        })] : [...product.images]
+
         if (req.files?.mainImage) {
             deleteFileWithPath(product.mainImage.url)
             product.mainImage = req.files.mainImage ?
                 { url: req.files.mainImage[0].path, alt: req.body.name || "product picture" } : product.mainImage
         }
+        Object.assign(product, req.body)
         await product.save();
 
         res.json(product);
@@ -144,9 +154,9 @@ export const updateProduct = async (req, res) => {
 
 export const deleteProduct = async (req, res) => {
     try {
-        const product = await Product.findByIdAndUpdate(req.params.id, { isDeleted: true }, { new: true });
+        const product = await Product.findByIdAndDelete(req.params.id);
         if (!product) return res.status(404).json({ message: "Product not found" });
-        res.json({ message: "Product deleted (soft delete)", product });
+        res.json({ message: "Product deleted", product });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -177,6 +187,25 @@ export const updateStockByBarcode = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+export const getCount = async (req, res) => {
+    try {
+        const counts = {
+            productsAvilable: await Product.countDocuments(),
+            variants: await ProductVariants.countDocuments(),
+
+            totalStock: await Product.aggregate([
+                { $unwind: "$variants" }, // Flatten the variants array
+                { $group: { _id: null, totalStock: { $sum: "$variants.stock" } } }
+            ])
+        }
+
+        res.status(200).json({ counts });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+
 
 
 

@@ -5,6 +5,7 @@ import {
     updateProduct,
     deleteProduct,
     addProduct,
+    getCount,
 } from "../controllers/products.js";
 import { upload } from "../middlewares/multer.js";
 import reviewsRouter from "./productReviews.js";
@@ -19,6 +20,7 @@ const uploadFields = upload.fields([
 
 
 
+productsRoute.get("/counts", getCount);
 productsRoute.get("/:id", getProductById);
 productsRoute.get("/", getProducts);
 productsRoute.post("/", uploadFields, addProduct);

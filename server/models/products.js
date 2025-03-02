@@ -36,6 +36,8 @@ const productSchema = new mongoose.Schema({
         }
     },
     discount: { type: Number, required: true, default: 0 },
+    actualPrice: { type: Number, required: true, default: 0 },
+
     // stock: { type: Number, required: true, min: 0 },
     images: [
         { url: { type: String, required: true }, alt: { type: String } }
@@ -78,15 +80,22 @@ const productSchema = new mongoose.Schema({
 
 
 
+productSchema.pre("save", function (next) {
+    this.actualPrice = Math.ceil(this.price - (this.discount / 100 * this.price));
+    next();
+});
 
 productSchema.virtual("sumStocks").get(function () {
     return this.variants.reduce((total, variant) => total + variant.stock, 0);
 });
 
+productSchema.set("toJSON", { virtuals: true });
+productSchema.set("toObject", { virtuals: true });
 
-productSchema.virtual("actualPrice").get(function () {
-    return (this.price + (this.price * this.discout / 100));
-});
+
+// productSchema.virtual("actualPrice").get(function () {
+//     return (this.price + (this.price * this.discout / 100));
+// });
 
 // Pre-save middleware to recalculate stock before saving
 productSchema.pre("save", function (next) {
