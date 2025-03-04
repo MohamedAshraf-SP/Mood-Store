@@ -3,17 +3,19 @@ import crypto from 'crypto';
 import axios from 'axios'
 import { get } from 'http';
 import { generateBodyDigest, generateHeaderDigest, generateID, hashPassword } from '../../utils/generators/generators.js';
+import dotenv from 'dotenv';
 // const customerCode = "J0086004385";
 // const password = "Jt123456";
 // const apiAccount = "663390130932817921";
 // const private_key = "20180ff83ca04442840339c682f951b5";
 
+dotenv.config()
 
 //ragab
-const customerCode = "J0086006972";
-const password = "Rr1131054";
-const apiAccount = "749605792625197074";
-const private_key = "7df288816cf642debd114ca3764b7539";
+const customerCode = process.env.CUSTOMER_CODE
+const password = process.env.PASSWORD
+const apiAccount = process.env.API_ACCOUNT
+const private_key = process.env.PRIVATE_KEY
 
 
 export const generateJTCreateRequestBody = (requestData, itemsData = requestData.items) => {
