@@ -1,5 +1,6 @@
+
 import Order from "../../models/orders.js";
-import orderService from "../../services/orders.js";
+
 
 export const getOrder = async (req, res) => {
     try {
@@ -12,26 +13,99 @@ export const getOrder = async (req, res) => {
         res.status(400).json({ error: error.message });
     }
 };
-
-export const searchOrderByPhone = async (req, res) => {
+/*
+export const searchOrders = async (req, res) => {
     try {
-        const usr = await Order.findMany({"receiver.phone":req.params.phone});
-        if (!usr) {
-            return res.status(404).json({ message: "order not found" });
+        const { confirmed,reciverPhone, billCode, txlogisticId, itemName, startDate, endDate } = req.body;
+
+        let filter = {};
+
+        if (reciverPhone) {
+            filter['receiver.mobile'] = reciverPhone; // Search in receiver's phone
         }
-        res.status(200).json(usr);
+        if (reciverPhone) {
+            filter['confirmed'] = confirmed; // Search in receiver's phone
+        }
+        if (billCode) {
+            filter.billCode = billCode;
+        }
+        if (txlogisticId) {
+            filter.txlogisticId = txlogisticId;
+        }
+        if (itemName) {
+            filter['items.itemName'] = { $regex: itemName, $options: 'i' }; // Case-insensitive partial match
+            filter['items.englishName'] = { $regex: itemName, $options: 'i' }; // Case-insensitive partial match
+        }
+        if (startDate && endDate) {
+            filter.createdAt = { $gte: new Date(startDate), $lte: new Date(endDate) }; // Filter by date range
+        } else if (startDate) {
+            filter.createdAt = { $gte: new Date(startDate) };
+        } else if (endDate) {
+            filter.createdAt = { $lte: new Date(endDate) };
+        }
+
+        if (startDate && endDate) {
+            filter.updatedAt = { $gte: new Date(startDate), $lte: new Date(endDate) }; // Filter by date range
+        } else if (startDate) {
+            filter.updatedAt = { $gte: new Date(startDate) };
+        } else if (endDate) {
+            filter.updatedAt = { $lte: new Date(endDate) };
+        }
+
+        const orders = await Order.find(filter);
+
+        res.status(200).json(orders);
     } catch (error) {
-        res.status(400).json({ error: error.message });
+        res.status(500).json({ message: 'Error searching orders', error });
     }
 };
-export const searchOrderByDate = async (req, res) => {
+*/
+
+export const searchOrders = async (req, res) => {
     try {
-        const usr = await Order.findMany({"receiver.phone":req.params.phone});
-        if (!usr) {
-            return res.status(404).json({ message: "order not found" });
+        const { receiverphone, billCode, txlogisticId, itemName, startDate, endDate } = req.body;
+
+        let filter = { $or: [] };
+
+        if (receiverphone) filter.$or.push({ "receiver.mobile": receiverphone });
+        if (billCode) filter.$or.push({ billCode });
+        if (txlogisticId) filter.$or.push({ txlogisticId });
+        if (itemName) filter.$or.push({ "items.itemName": { $regex: itemName, $options: "i" } }); // Case-insensitive search
+
+        if (startDate && endDate) {
+            filter.$or.push({
+                createdAt: {
+                    $gte: new Date(startDate),
+                    $lte: new Date(endDate)
+                }
+            });
+        } else if (startDate) {
+            filter.$or.push({ createdAt: { $gte: new Date(startDate) } });
+        } else if (endDate) {
+            filter.$or.push({ createdAt: { $lte: new Date(endDate) } });
         }
-        res.status(200).json(usr);
+
+        // If no search fields were provided, return all orders
+        if (filter.$or.length === 0) delete filter.$or;
+
+        const orders = await Order.find(filter);
+        res.json(orders);
     } catch (error) {
-        res.status(400).json({ error: error.message });
+        console.error(error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+};
+
+export const getCount = async (req, res) => {
+    try {
+        const counts = {
+            unconfirmedOrders: await Order.countDocuments({ deleted: "0", confirmed: "0" }),
+            confirmedOrders: await Order.countDocuments({ deleted: "0", confirmed: "1" }),
+
+        }
+
+        res.status(200).json({ counts });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
 };

@@ -70,6 +70,7 @@ export const addProduct = async (req, res) => {
 }
 
 
+
 export const getProducts = async (req, res) => {
     try {
         let { category, minPrice, maxPrice, isFeatured, sort, page, limit } = req.query;
@@ -131,7 +132,7 @@ export const updateProduct = async (req, res) => {
             });
         }
 
-        product.images = req.files?.images ? [...product.images,...req.files.images.map(image => {
+        product.images = req.files?.images ? [...product.images, ...req.files.images.map(image => {
             return { url: image.path, alt: req.body.name || "product picture" }
         })] : [...product.images]
 
@@ -190,13 +191,13 @@ export const updateStockByBarcode = async (req, res) => {
 export const getCount = async (req, res) => {
     try {
         const counts = {
-            productsAvilable: await Product.countDocuments(),
-            variants: await ProductVariants.countDocuments(),
-
-            totalStock: await Product.aggregate([
-                { $unwind: "$variants" }, // Flatten the variants array
-                { $group: { _id: null, totalStock: { $sum: "$variants.stock" } } }
-            ])
+            acitvePoducts: await Product.countDocuments({ isActive: true }),
+            unactivePoducts: await Product.countDocuments({ isActive: false }),
+            variants: await ProductVariants.countDocuments()
+            // totalStock: await Product.aggregate([
+            //     { $unwind: "$variants" }, // Flatten the variants array
+            //     { $group: { _id: null, totalStock: { $sum: "$variants.stock" } } }
+            // ])
         }
 
         res.status(200).json({ counts });

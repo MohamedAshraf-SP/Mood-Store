@@ -6,21 +6,27 @@ export const getAddressSeprated = async (req, res) => {
     try {
         const { Province, City } = req.body;
         let enabled = req.body.enabled || "1"
-       // console.log(Province, City);
+        // let price = req.body.address || "1"
+        // console.log(Province, City);
 
         let result;
+        let price;
         if (!Province) {
             result = await Address.find({ enabled }).distinct('Province');
-           // console.log(result);// Select only the Province column
+
+
+            // console.log(result);// Select only the Province column
         } else if (!City) {
             result = await Address.find({ Province, enabled }).distinct('City');
-        //    console.log(result); // Select only the City column
+            price = await Address.find({ Province, enabled }).distinct('shippingPrice');
+            //    console.log(result); // Select only the City column
         } else {
             result = await Address.find({ Province, City, enabled }).distinct('Area');
+            price = await Address.find({ Province,City, enabled }).distinct('shippingPrice');
             // Select only the Area column
         }
 
-        res.status(200).json({ success: true, data: result });
+        res.status(200).json({ success: true, data: {result,price }});
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }

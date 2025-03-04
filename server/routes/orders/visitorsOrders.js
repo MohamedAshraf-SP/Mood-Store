@@ -1,6 +1,6 @@
 import express from "express";
 import {
-    getOrder,
+   
     getAllVisitorsOrders,
     updateVisitorsOrder,
     deleteVisitorsOrder,
@@ -10,8 +10,6 @@ import {
 export const visitorsOrdersRoute = express.Router();
 
 
-
-visitorsOrdersRoute.get("/:id", getOrder);
 visitorsOrdersRoute.get("/", getAllVisitorsOrders);
 visitorsOrdersRoute.post("/", addVisitorsOrder);
 visitorsOrdersRoute.put("/:id", updateVisitorsOrder);

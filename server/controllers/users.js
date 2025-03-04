@@ -96,3 +96,18 @@ export const updateUser = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+
+
+
+export const getCount = async (req, res) => {
+    try {
+        const counts = {
+            usersCount: await User.countDocuments(),
+           
+        }
+
+        res.status(200).json({ counts });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};

@@ -1,10 +1,13 @@
 import express from "express";
 import {
     getCategoryById,
-    getCategories,
+    getAllCategories,
+    getMainCategories,
+    getSubCategoriesOfCategory,
     updateCategory,
     deleteCategory,
     addCategory,
+    getCount
 } from "../controllers/categories.js";
 import { upload } from "../middlewares/multer.js";
 //import { authMiddleware, roleMiddleware } from "../middlewares/Middlewares.js";
@@ -16,9 +19,13 @@ const uploadFields = upload.fields([
 ]);
 
 
-
+categoriesRoute.get("/counts", getCount);
+categoriesRoute.get("/main", getMainCategories);
+categoriesRoute.get("/:id/subcategories", getSubCategoriesOfCategory);
 categoriesRoute.get("/:id", getCategoryById);
-categoriesRoute.get("/", getCategories);
+
+categoriesRoute.get("/", getAllCategories);
+categoriesRoute.get("/", getAllCategories);
 categoriesRoute.post("/", uploadFields, addCategory);
 categoriesRoute.put("/:id", uploadFields, updateCategory);
 categoriesRoute.delete("/:id", deleteCategory);

@@ -3,17 +3,7 @@ import { generateJTCancelRequestBody, generateJTCreateRequestBody, OrderRequest 
 
 
 
-export const getOrder = async (req, res) => {
-    try {
-        const usr = await Order.findById(req.params.id);
-        if (!usr) {
-            return res.status(404).json({ message: "order not found" });
-        }
-        res.status(200).json(usr);
-    } catch (error) {
-        res.status(400).json({ error: error.message });
-    }
-};
+
 // Get all orders
 export const getAllVisitorsOrders = async (req, res) => {
     try {
@@ -22,7 +12,7 @@ export const getAllVisitorsOrders = async (req, res) => {
         limit = parseInt(limit);
         const skip = (page - 1) * limit;
 
-        const orders = await Order.find({ confirmed: 0,deleted:0 })
+        const orders = await Order.find({ confirmed: 0, deleted: 0 })
             .skip(skip)
             .limit(limit);
 
@@ -69,7 +59,7 @@ export const deleteVisitorsOrder = async (req, res) => {
 export const updateVisitorsOrder = async (req, res) => {
     try {
         const { id } = req.params; // Assuming you use ID to find the order
-        const updatedOrder = await Order.findOneAndUpdate(({_id:id, deleted:"0", confirmed:"0"}), req.body, {
+        const updatedOrder = await Order.findOneAndUpdate(({ _id: id, deleted: "0", confirmed: "0" }), req.body, {
             new: true,
         });
 
@@ -79,5 +69,19 @@ export const updateVisitorsOrder = async (req, res) => {
         res.status(200).json(updatedOrder);
     } catch (error) {
         res.status(400).json({ error: error.message });
+    }
+};
+
+export const getCount = async (req, res) => {
+    try {
+        const counts = {
+            unconfirmedOrders: await Order.countDocuments({ deleted: "0", confirmed: "0" }),
+            confirmedOrders: await Order.countDocuments({ deleted: "0", confirmed: "1" }),
+
+        }
+
+        res.status(200).json({ counts });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
 };

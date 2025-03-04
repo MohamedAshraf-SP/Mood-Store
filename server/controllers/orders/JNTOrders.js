@@ -62,7 +62,7 @@ export const confirmJNTOrder = async (req, res) => {
         const orderId = req.params.id
 
 
-        const requestOrderData = await Order.findOne({_id:orderId, deleted:"0", confirmed:"0"})
+        const requestOrderData = await Order.findOne({ _id: orderId, deleted: "0", confirmed: "0" })
             .select('-_id -createdAt -updatedAt -__v -items._id -sender._id -receiver._id -billCode')
             .lean();
 
@@ -86,11 +86,11 @@ export const printJNTOrder = async (req, res) => {
     try {
 
         let { printCod, printSize, showCustomerOrderId } = req.body
-       // console.log(printCod, printSize, showCustomerOrderId);
-        let orderData = await Order.findOne({_id:req.params.id, deleted:"0", confirmed:"1"})
+        // console.log(printCod, printSize, showCustomerOrderId);
+        let orderData = await Order.findOne({ _id: req.params.id, deleted: "0", confirmed: "1" })
             .select('-_id  billCode customerCode')
             .lean();
-            console.log(orderData);
+        console.log(orderData);
 
         if (!orderData) {
             return res.status(404).json({ message: "Order not found" });
@@ -147,30 +147,33 @@ export const cancelJNTOrder = async (req, res) => {
 };
 export const trackOrder = async (req, res) => {
     try {
-       
+
         const { ObjectId } = mongoose.Types;
-        let  requestData = await Order.aggregate([ 
+        let requestData = await Order.aggregate([
             {
-                $match: {  
-                _id:new ObjectId(`${req.params.id}`),
-                "confirmed": "1",
-                "deleted": "0"
-              }},
-             {$project: {  // for renaming fields
-                _id: 0,
-              //  deleted: "hello",
-                billCodes: "$billCode", // Rename billCode to bill codes
-              }},
-            
-          ])
-          console.log(requestData);
-     //     if(requestData.length<1)return res.status(404).json({message:"order not confirmed or not exist"})
+                $match: {
+                    _id: new ObjectId(`${req.params.id}`),
+                    "confirmed": "1",
+                    "deleted": "0"
+                }
+            },
+            {
+                $project: {  // for renaming fields
+                    _id: 0,
+                    //  deleted: "hello",
+                    billCodes: "$billCode", // Rename billCode to bill codes
+                }
+            },
 
-        let  requestData1={billCodes:"JEG000282544108"}
+        ])
+        console.log(requestData);
+        //     if(requestData.length<1)return res.status(404).json({message:"order not confirmed or not exist"})
+
+        let requestData1 = { billCodes: "JEG000282544108" }
 
 
-    //   let allRequestData = generateTrackRequestBody(requestData[0])
-       let allRequestData = generateTrackRequestBody(requestData1)
+        //   let allRequestData = generateTrackRequestBody(requestData[0])
+        let allRequestData = generateTrackRequestBody(requestData1)
 
         console.log(allRequestData)
 
@@ -197,3 +200,4 @@ export const trackOrder = async (req, res) => {
 //         res.status(400).json({ error: error.message });
 //     }
 // };
+

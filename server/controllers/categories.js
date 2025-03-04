@@ -22,14 +22,35 @@ const addCategory = async (req, res) => {
     }
 };
 
-const getCategories = async (req, res) => {
+const getAllCategories = async (req, res) => {
     try {
-        const categories = await Category.find().populate("category", "name");
+
+        const categories = await Category.find()
         res.status(200).json(categories);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 };
+const getMainCategories = async (req, res) => {
+    try {
+
+        const categories = await Category.find({category:{ $exists: false}})
+        res.status(200).json(categories);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+const getSubCategoriesOfCategory = async (req, res) => {
+    try {
+
+        const categories = await Category.find({category:{$in:[req.params.id]}})
+        res.status(200).json(categories);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+
 
 const getCategoryById = async (req, res) => {
     try {
@@ -90,4 +111,25 @@ const deleteCategory = async (req, res) => {
     }
 };
 
-export { addCategory, getCategories, getCategoryById, updateCategory, deleteCategory };
+export const getCount = async (req, res) => {
+    try {
+        const counts = {
+            mainCategories: await Category.countDocuments({ category: { $exists: false } }),
+            subCategories: await Category.countDocuments({ category: { $exists: true, $ne: null } }),
+
+            // $or: [
+            //     { category: { $exists: false } }, // Field does not exist
+            //     { category: null } // Field exists but is null
+            // ] 
+
+        }
+
+        res.status(200).json({ counts });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+
+
+export { addCategory, getAllCategories,getMainCategories,getSubCategoriesOfCategory, getCategoryById, updateCategory, deleteCategory };
