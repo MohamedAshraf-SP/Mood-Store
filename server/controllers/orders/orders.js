@@ -63,10 +63,13 @@ export const searchOrders = async (req, res) => {
 
 export const searchOrders = async (req, res) => {
     try {
-        const { receiverphone, billCode, txlogisticId, itemName, startDate, endDate } = req.body;
+        const { confirmed, receiverphone, billCode, txlogisticId, itemName, startDate, endDate } = req.body;
+
 
         let filter = { $or: [] };
+        let confirmStatus = {}
 
+        if (confirmed) confirmStatus["confirmed"] = confirmed
         if (receiverphone) filter.$or.push({ "receiver.mobile": receiverphone });
         if (billCode) filter.$or.push({ billCode });
         if (txlogisticId) filter.$or.push({ txlogisticId });
@@ -88,7 +91,10 @@ export const searchOrders = async (req, res) => {
         // If no search fields were provided, return all orders
         if (filter.$or.length === 0) delete filter.$or;
 
-        const orders = await Order.find(filter);
+        //console.log(filter);
+        const orders = await Order.find({ $and: [filter, confirmStatus] });
+
+        //console.log(orders);
         res.json(orders);
     } catch (error) {
         console.error(error);

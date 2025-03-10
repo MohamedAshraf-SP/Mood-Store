@@ -70,6 +70,42 @@ export const addProduct = async (req, res) => {
 }
 
 
+export const searchVariants = async (req, res) => {
+    try {
+        const { name } = req.query
+        let filter = { $or: [] }
+
+        if (name) {
+            filter.$or.push({ "name": name })
+            filter.$or.push({ "variants.color": name })
+
+        } else {
+            filter = { }
+        }
+        console.log(filter);
+        const products = await Product.aggregate([
+            { $unwind: "$variants" },
+            { $match: filter },
+            {
+                $project: {
+                    _id: 0,
+                    "product": { $concat: ["$name", " ", "$variants.color", " (", "$variants.size",")"] },
+                    "variantId": "$variants._id",
+                    "avilable items": "$variants.stock",
+                    "barCode": "$variants.barCode",
+                    "price": "$price"
+
+                    // "product": "$name $variants.size $variants.color",
+                    
+                }
+            }
+        ])
+        res.status(200).json({ products })
+
+    } catch (e) {
+        res.status(500).json({ message: e.message })
+    }
+}
 
 export const getProducts = async (req, res) => {
     try {
@@ -84,7 +120,8 @@ export const getProducts = async (req, res) => {
 
         page = Number(page) || 1;
         limit = Number(limit) || 10;
-        const skip = (page - 1) * limit;
+        let skip = (page - 1) * limit;
+        console.log(limit);
 
         const sortQuery = sort ? { [sort]: 1 } : { createdAt: -1 };
 
@@ -92,8 +129,17 @@ export const getProducts = async (req, res) => {
             .sort(sortQuery)
             .skip(skip)
             .limit(limit);
+        const count = await Product.countDocuments(query)
 
-        res.status(200).json({ products });
+        if (skip == 0) skip = 1
+        const totalPages = Math.ceil(count / limit)
+
+        res.status(200).json({
+            "currentPage": page,
+            "ProductsCount": count,
+            "totalPages": totalPages,
+            "Products": products
+        });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
