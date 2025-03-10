@@ -7,7 +7,7 @@ const addressSchema = new Schema({
     City: { type: String },
     Area: { type: String },
     enabled: { type: String, required: true, default: "1" },
-    shippingPrice: { type: String, required: true},
+    shippingPrice: { type: String, required: true },
     createdAt: { type: Date, default: Date.now },
     updatedAt: {
         type: Date, default: Date.now
@@ -17,12 +17,43 @@ const addressSchema = new Schema({
 
 
 
+const senderSchema = new Schema({
+    area: { type: String },
+    street: { type: String },
+    city: { type: String },
+    mobile: { type: String },
+    mailBox: { type: String },
+    phone: { type: String },
+    countryCode: { type: String },
+    name: { type: String },
+    company: { type: String },
+    postCode: { type: String },
+    prov: { type: String },
+    areaCode: { type: String },
+    building: { type: String },
+    floor: { type: String },
+    flats: { type: String },
+    createdAt: { type: Date, default: Date.now },
+    updatedAt: {
+        type: Date, default: Date.now
+    },
+});
+
+
+
+
+
+
+
 
 addressSchema.pre('save', function (next) {
     this.updatedAt = Date.now();
     next();
 });
 
-export default model('Address', addressSchema);
+
+const Sender = model('Sender', senderSchema);
+const Address = model('Address', addressSchema);
+export { Sender, Address }
 
 

@@ -1,7 +1,7 @@
 
 import { deleteFileWithPath } from "../../utils/helpers/deleteFile.js"
 import { readCsvAsync } from "../../utils/helpers/importFormCSV.js"
-import Address from "../../models/addresses.js"
+import {Address} from "../../models/addresses.js"
 
 
 export const importAddressesFromCSV = async (req, res) => {

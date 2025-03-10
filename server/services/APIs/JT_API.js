@@ -49,39 +49,39 @@ export const generateJTCreateRequestBody = (requestData, itemsData = requestData
         height: requestData.height || 60,
 
         receiver: {
-            area: requestData.receiver?.area || "القاهرة",
-            street: requestData.receiver?.street || "D",
-            address: requestData.receiver?.address || "kkk",
-            addressBak: requestData.receiver?.addressBak || "FFF",
-            town: requestData.receiver?.town || "ll",
-            city: requestData.receiver?.city || "مدينة نصر",
-            mobile: requestData.receiver?.mobile || "01099075241",
-            mailBox: requestData.receiver?.mailBox || "ant_li123@qq.com",
-            phone: requestData.receiver?.phone || "034351203",
+            area: requestData.receiver?.area || "-",
+            street: requestData.receiver?.street || "-",
+            address: requestData.receiver?.address || "-",
+            addressBak: requestData.receiver?.addressBak || "-",
+            town: requestData.receiver?.town || "-",
+            city: requestData.receiver?.city || "-",
+            mobile: requestData.receiver?.mobile || "0100000000",
+            mailBox: requestData.receiver?.mailBox || "a@b.com",
+            phone: requestData.receiver?.phone || "010000000",
             countryCode: "EGY",
-            name: requestData.receiver?.name || "HAGER",
-            alternateReceiverPhoneNo: requestData.receiver?.alternateReceiverPhoneNo || "12-31321322",
+            name: requestData.receiver?.name || "-",
+            alternateReceiverPhoneNo: requestData.receiver?.alternateReceiverPhoneNo || "0100000000",
             company: requestData.receiver?.company || "JT",
-            postCode: requestData.receiver?.postCode || "54830",
-            prov: requestData.receiver?.prov || "القاهرة",
-            areaCode: requestData.receiver?.areaCode || "A0003324",
-            building: requestData.receiver?.building || "13",
-            floor: requestData.receiver?.floor || "25",
-            flats: requestData.receiver?.flats || "47"
+            postCode: requestData.receiver?.postCode || "11111",
+            prov: requestData.receiver?.prov || "-",
+            areaCode: requestData.receiver?.areaCode || "1",
+            building: requestData.receiver?.building || "1",
+            floor: requestData.receiver?.floor || "1",
+            flats: requestData.receiver?.flats || "1"
         },
 
         sender: {
-            area: requestData.sender?.area || "stade",
-            street: requestData.sender?.street || "1",
-            city: requestData.sender?.city || "tanta",
+            area: requestData.sender?.area || "-",
+            street: requestData.sender?.street || "-",
+            city: requestData.sender?.city || "-",
             mobile: requestData.sender?.mobile || "01000000000",
             mailBox: requestData.sender?.mailBox || "a@b.com",
             phone: requestData.sender?.phone || "01000000000",
             countryCode: "EGY",
-            name: requestData.sender?.name || "Mody Store",
+            name: requestData.sender?.name || "-",
             company: requestData.sender?.company || "JT",
-            postCode: requestData.sender?.postCode || "16880",
-            prov: requestData.sender?.prov || "البحيرة",
+            postCode: requestData.sender?.postCode || "11111",
+            prov: requestData.sender?.prov || "-",
             areaCode: requestData.sender?.areaCode || "1",
             building: requestData.sender?.building || "1",
             floor: requestData.sender?.floor || "1",
@@ -100,7 +100,7 @@ export const generateJTCancelRequestBody = (requestData) => {
         txlogisticId: requestData.txlogisticId, // Dynamic store ID from frontend
         customerCode: customerCode, // Static value
         digest: generateBodyDigest(customerCode, hashPassword(password), private_key), // Optional dynamic, default fallback
-        reason: requestData.reason || "-",
+        reason: requestData.reason || "No Reason",
         orderType: "1", // Static
     }
 };

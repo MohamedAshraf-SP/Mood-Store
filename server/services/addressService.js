@@ -1,4 +1,4 @@
-import Address from "../models/addresses.js";
+import {Address} from "../models/addresses.js";
 
 class AddressService {
     // Create a new address
