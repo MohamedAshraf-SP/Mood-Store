@@ -22,11 +22,11 @@ export const getAddressSeprated = async (req, res) => {
             //    console.log(result); // Select only the City column
         } else {
             result = await Address.find({ Province, City, enabled }).distinct('Area');
-            price = await Address.find({ Province,City, enabled }).distinct('shippingPrice');
+            price = await Address.find({ Province, City, enabled }).distinct('shippingPrice');
             // Select only the Area column
         }
 
-        res.status(200).json({ success: true, data: {result,price }});
+        res.status(200).json({ success: true, data: { result, price } });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }
@@ -36,16 +36,34 @@ export const updateStatus = async (req, res) => {
     try {
         const { Province, City, Area, enabled } = req.body;
         if (!Province || !City || !Area || !enabled) {
-            return res.status(400).json({ success: false, message: "Missing required fields" });
+            return res.status(400).json({ success: false, message: "يرجي اكمال البيانات" });
         }
 
         const result = await Address.updateOne({ Province, City, Area }, { $set: { enabled } });
 
         if (result.modifiedCount === 0) {
-            return res.status(404).json({ success: false, message: "Address not found or already set!!" });
+            return res.status(404).json({ success: false, message: "العنوان موجود او تم ضبطه بالفعل !!" });
         }
 
-        res.status(200).json({ success: true, message: `Address ${enabled === "1" ? "enabled" : "disabled"} successfully!!` });
+        res.status(200).json({ success: true, message: `تم ${enabled === "1" ? "تفعيل" : "الغاء تفعيل"} العنوان بنجاح!!` });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
+export const updatePriceOfProvince = async (req, res) => {
+    try {
+        const { Province, shippingPrice } = req.body;
+        if (!Province || !shippingPrice) {
+            return res.status(400).json({ success: false, message: "يرجي اكمال البيانات" });
+        }
+
+        const result = await Address.updateMany({ Province }, { $set: { shippingPrice } });
+
+        if (result.modifiedCount === 0) {
+            return res.status(404).json({ success: false, message: "العنوان موجود او تم ضبطه بالفعل !!" });
+        }
+
+        res.status(200).json({ success: true, message: `تم تحديث سعر الشحن  بنجاج الي ${shippingPrice} .` });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }

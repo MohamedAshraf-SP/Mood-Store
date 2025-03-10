@@ -3,7 +3,7 @@ import { importAddressesFromCSV } from "./../controllers/addresses/addressesForm
 import { upload } from "../middlewares/multer.js";
 import { Router } from 'express';
 
-import { getAddresses, getAddressSeprated, updateStatus } from "./../controllers/addresses/addresses.js"
+import { getAddresses, getAddressSeprated, updateStatus, updatePriceOfProvince } from "./../controllers/addresses/addresses.js"
 import { roleMiddleware } from "../middlewares/autherization.js";
 const addressRoute = new Router()
 
@@ -14,6 +14,7 @@ addressRoute.post('/importCSV', upload.single('addresses'), importAddressesFromC
 //Addresss
 addressRoute.post('/seprated', getAddressSeprated);
 addressRoute.post('/changestatus', updateStatus);
+addressRoute.put('/change_shipping_price', updatePriceOfProvince);
 addressRoute.get('/', getAddresses);
 // addressRoute.post('/', addAddress);
 // addressRoute.put('/:id', updateAddress);

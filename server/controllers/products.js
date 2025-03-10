@@ -80,7 +80,7 @@ export const searchVariants = async (req, res) => {
             filter.$or.push({ "variants.color": name })
 
         } else {
-            filter = { }
+            filter = {}
         }
         console.log(filter);
         const products = await Product.aggregate([
@@ -89,14 +89,14 @@ export const searchVariants = async (req, res) => {
             {
                 $project: {
                     _id: 0,
-                    "product": { $concat: ["$name", " ", "$variants.color", " (", "$variants.size",")"] },
+                    "product": { $concat: ["$name", " ", "$variants.color", " (", "$variants.size", ")"] },
                     "variantId": "$variants._id",
                     "avilable items": "$variants.stock",
                     "barCode": "$variants.barCode",
                     "price": "$price"
 
                     // "product": "$name $variants.size $variants.color",
-                    
+
                 }
             }
         ])
@@ -109,7 +109,7 @@ export const searchVariants = async (req, res) => {
 
 export const getProducts = async (req, res) => {
     try {
-        let { category, minPrice, maxPrice, isFeatured, sort, page, limit } = req.query;
+        let { category, minPrice, maxPrice, isFeatured, sort, sortType, page, limit } = req.query;
         let query = { isDeleted: false };
         //  console.log(minPrice);
 
@@ -123,8 +123,8 @@ export const getProducts = async (req, res) => {
         let skip = (page - 1) * limit;
         console.log(limit);
 
-        const sortQuery = sort ? { [sort]: 1 } : { createdAt: -1 };
-
+        const sortQuery = sort ? { [sort]: (sortType ? Number(sortType) : 1) } : { createdAt: -1 };
+        //console.log(sortQuery);
         const products = await Product.find(query)
             .sort(sortQuery)
             .skip(skip)
