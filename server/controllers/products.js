@@ -167,6 +167,19 @@ export const updateProduct = async (req, res) => {
         if (!product) {
             return res.status(404).json({ error: "Product not found" });
         }
+
+        
+        const variants = req.body.variants ? req.body.variants.map((variant) => {
+            const normalizedVariant = Object.assign({}, variant);
+            return {
+                barCode: variant.barCode ? variant.barCode : generateBarcode(),
+                size: normalizedVariant.size,
+                color: normalizedVariant.color,
+                stock: normalizedVariant.stock,
+
+            }
+        }) : product.variants
+
         if (req.body?.removedImagesPaths) {
             // Remove images from the product
             product.images = product.images.filter(image => !req.body.removedImagesPaths.includes(image.url));
@@ -187,6 +200,9 @@ export const updateProduct = async (req, res) => {
             product.mainImage = req.files.mainImage ?
                 { url: req.files.mainImage[0].path, alt: req.body.name || "product picture" } : product.mainImage
         }
+
+        req.body.variants = variants
+
         Object.assign(product, req.body)
         await product.save();
 

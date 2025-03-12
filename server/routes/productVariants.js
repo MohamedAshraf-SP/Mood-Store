@@ -7,8 +7,8 @@ const variantsRouter = express.Router();
 
 variantsRouter.post("/:id/variants", addVariant);
 variantsRouter.get("/:id/variants", getVariants);
-variantsRouter.put("/:productId/variants/:reviewId", updateVariant);
-variantsRouter.delete("/:productId/variants/:reviewId", deleteVariant);
+variantsRouter.put("/:productId/variants/:variantId", updateVariant);
+variantsRouter.delete("/:productId/variants/:variantId", deleteVariant);
 
 variantsRouter.patch("/variants/:barCode/add-stock", addStock); // Add stock (default 1)
 variantsRouter.patch("/variants/:barCode/decrease-stock", decreaseStock);
