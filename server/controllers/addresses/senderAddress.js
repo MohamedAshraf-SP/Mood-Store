@@ -23,6 +23,17 @@ const getSenderById = async (req, res) => {
         res.status(500).json({ message: "حدث خطأ أثناء جلب بيانات المرسل", error });
     }
 };
+const getDefaultSenderAddress = async (req, res) => {
+    try {
+        const sender = await Sender.findOne({ default: true });
+        if (!sender) {
+            return res.status(404).json({ message: "يرجي تحديد عنوان اساسي" });
+        }
+        res.status(200).json({ sender });
+    } catch (error) {
+        res.status(500).json({ message: "حدث خطأ أثناء جلب بيانات المرسل", error });
+    }
+};
 const getAllSenders = async (req, res) => {
     try {
         const senders = await Sender.find();
@@ -67,4 +78,4 @@ const deleteSender = async (req, res) => {
 
 
 
-export { getAllSenders, createSender, getSenderById, updateSender, deleteSender };
+export { getAllSenders, getDefaultSenderAddress, createSender, getSenderById, updateSender, deleteSender };
