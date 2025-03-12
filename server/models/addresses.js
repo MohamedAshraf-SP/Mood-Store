@@ -18,6 +18,7 @@ const addressSchema = new Schema({
 
 
 const senderSchema = new Schema({
+    default: { type: Boolean, required: false, default: false },
     area: { type: String },
     street: { type: String },
     city: { type: String },

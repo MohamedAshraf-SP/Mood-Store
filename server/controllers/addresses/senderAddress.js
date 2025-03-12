@@ -35,10 +35,17 @@ const getAllSenders = async (req, res) => {
 
 const updateSender = async (req, res) => {
     try {
+
+
+        if (req.body?.default == true) {
+            console.log(req.body?.default == true);
+            await Sender.updateOne({ default: true }, { default: false })
+        }
         const sender = await Sender.findByIdAndUpdate(req.params.id, req.body, { new: true });
         if (!sender) {
             return res.status(404).json({ message: "المرسل غير موجود" });
         }
+
         res.status(200).json({ message: "تم تحديث بيانات المرسل بنجاح", sender });
     } catch (error) {
         res.status(500).json({ message: "حدث خطأ أثناء تحديث بيانات المرسل", error });
