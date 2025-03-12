@@ -93,7 +93,7 @@ export const searchVariants = async (req, res) => {
                     "variantId": "$variants._id",
                     "avilable items": "$variants.stock",
                     "barCode": "$variants.barCode",
-                    "price": "$price"
+                    "price": "$actualPrice"
 
                     // "product": "$name $variants.size $variants.color",
 
