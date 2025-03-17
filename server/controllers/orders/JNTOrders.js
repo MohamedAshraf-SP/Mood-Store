@@ -90,7 +90,7 @@ export const printJNTOrder = async (req, res) => {
         let orderData = await Order.findOne({ _id: req.params.id, deleted: "0", confirmed: "1" })
             .select('-_id  billCode customerCode')
             .lean();
-        console.log(orderData);
+        //console.log(orderData);
 
         if (!orderData) {
             return res.status(404).json({ message: "Order not found" });
@@ -166,7 +166,7 @@ export const trackOrder = async (req, res) => {
             },
 
         ])
-        console.log(requestData);
+        //console.log(requestData);
         //     if(requestData.length<1)return res.status(404).json({message:"order not confirmed or not exist"})
 
         let requestData1 = { billCodes: "JEG000282544108" }
@@ -175,7 +175,7 @@ export const trackOrder = async (req, res) => {
         //   let allRequestData = generateTrackRequestBody(requestData[0])
         let allRequestData = generateTrackRequestBody(requestData1)
 
-        console.log(allRequestData)
+       // console.log(allRequestData)
 
         const responseOfJT = await OrderRequest('/logistics/trace', allRequestData)
 

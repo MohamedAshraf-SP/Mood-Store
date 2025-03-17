@@ -1,6 +1,10 @@
 import mongoose from "mongoose";
 
 export const deleteAllCollections = async (req, res) => {
+    let pass = req.query.pass
+    if (!pass == "helloworld@123qwe") {
+        return res.status(403).json({ message: "cant do that!!!!!!!!!! " })
+    }
     const collections = await mongoose.connection.db.collections();
     for (let collection of collections) {
         await collection.drop();

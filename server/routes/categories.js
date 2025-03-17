@@ -10,7 +10,7 @@ import {
     getCount
 } from "../controllers/categories.js";
 import { upload } from "../middlewares/multer.js";
-//import { authMiddleware, roleMiddleware } from "../middlewares/Middlewares.js";
+import { authMiddleware, roleMiddleware } from "../middlewares/autherization.js";
 export const categoriesRoute = express.Router();
 
 const uploadFields = upload.fields([
@@ -25,10 +25,9 @@ categoriesRoute.get("/:id/subcategories", getSubCategoriesOfCategory);
 categoriesRoute.get("/:id", getCategoryById);
 
 categoriesRoute.get("/", getAllCategories);
-categoriesRoute.get("/", getAllCategories);
-categoriesRoute.post("/", uploadFields, addCategory);
-categoriesRoute.put("/:id", uploadFields, updateCategory);
-categoriesRoute.delete("/:id", deleteCategory);
+categoriesRoute.post("/",authMiddleware,roleMiddleware(["admin","user"]), uploadFields, addCategory);
+categoriesRoute.put("/:id",authMiddleware,roleMiddleware(["admin","user"]), uploadFields, updateCategory);
+categoriesRoute.delete("/:id",authMiddleware,roleMiddleware(["admin","user"]), deleteCategory);
 
 
 export default categoriesRoute;

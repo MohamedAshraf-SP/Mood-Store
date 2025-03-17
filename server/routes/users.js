@@ -7,10 +7,12 @@ import {
   addUser,
   getCount
 } from "../controllers/users.js";
+import { authMiddleware, roleMiddleware } from "../middlewares/autherization.js";
 //import { authMiddleware, roleMiddleware } from "../middlewares/Middlewares.js";
 export const usersRoute = express.Router();
 
-usersRoute.get("/counts", getCount);
+usersRoute.use(authMiddleware, roleMiddleware(["admin"]))
+usersRoute.get("/counts", roleMiddleware(["admin"]), getCount);
 usersRoute.delete("/:id", deleteUser);
 usersRoute.post("/:id", getUser);
 usersRoute.post("/", addUser);

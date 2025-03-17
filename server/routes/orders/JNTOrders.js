@@ -9,9 +9,11 @@ import {
     printJNTOrder,
 
 } from "../../controllers/orders/JNTOrders.js";
-//import { authMiddleware, roleMiddleware } from "../middlewares/Middlewares.js";
+import { authMiddleware, roleMiddleware } from "../../middlewares/autherization.js";
 export const JNTOrdersRoute = express.Router();
 
+//JNTOrdersRoute.use(authMiddleware)
+JNTOrdersRoute.use(authMiddleware,roleMiddleware(["admin", "user"]))
 
 JNTOrdersRoute.get("/track/:id", trackOrder);
 JNTOrdersRoute.get("/", getJNTOrders);

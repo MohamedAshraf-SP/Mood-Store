@@ -20,8 +20,8 @@ export const login = async (req, res) => {
         const refreshToken = generateRefreshToken(user);
 
         res.cookie("refreshToken", refreshToken, {
-            httpOnly: true,
-            secure: true, // Use true in production for HTTPS
+            httpOnly: false,
+            secure: false, // Use true in production for HTTPS
             sameSite: "Strict",
         });
 
@@ -50,8 +50,8 @@ export const refreshToken = async (req, res) => {
             const newRefreshToken = generateRefreshToken({ id: userObj.id });
 
             res.cookie("refreshToken", newRefreshToken, {
-                httpOnly: true,
-                secure: true,
+                httpOnly: false,
+                secure: false,
                 sameSite: "Strict",
             });
 
@@ -63,6 +63,11 @@ export const refreshToken = async (req, res) => {
 
 
 export const logout = async (req, res) => {
-    res.clearCookie('refreshToken');
+    res.clearCookie("refreshToken", {
+        httpOnly: false,
+        secure: false,
+        sameSite: "Lax" // If SameSite=None was used initially, you need it here too
+    });
     res.json({ message: "Logged out successfully" });
+
 }

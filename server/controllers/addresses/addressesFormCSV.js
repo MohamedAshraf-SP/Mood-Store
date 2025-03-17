@@ -10,7 +10,7 @@ export const importAddressesFromCSV = async (req, res) => {
         let start = parseInt(req.query.start) || 1
         let end = parseInt(req.query.end)|| envLimit
 
-        console.log(req.query, end);
+      //  console.log(req.query, end);
 
 
         if (start < 1 || start > envLimit || start > end) {

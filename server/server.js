@@ -25,10 +25,12 @@ console.log(dbURI)
 const app = express();
 const corsOptions = {
   origin: '*', // Replace with your client origin
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  methods: ['GET', 'POST', 'PUT', , "PATCH", 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
   optionsSuccessStatus: 200,
 };
+
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 ///console.log(path.join(__dirname, 'uploads'));

@@ -4,6 +4,10 @@ import { Sender } from "../../models/addresses.js";
 
 const createSender = async (req, res) => {
     try {
+        if (req.body?.default == true) {
+            //  console.log(req.body?.default == true);
+            await Sender.updateOne({ default: true }, { default: false })
+        }
         const sender = new Sender(req.body);
         await sender.save();
         res.status(201).json({ message: "تم إنشاء المرسل بنجاح", sender });
@@ -49,7 +53,7 @@ const updateSender = async (req, res) => {
 
 
         if (req.body?.default == true) {
-            console.log(req.body?.default == true);
+            //  console.log(req.body?.default == true);
             await Sender.updateOne({ default: true }, { default: false })
         }
         const sender = await Sender.findByIdAndUpdate(req.params.id, req.body, { new: true });

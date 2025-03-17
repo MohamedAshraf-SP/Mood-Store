@@ -82,7 +82,7 @@ export const searchVariants = async (req, res) => {
         } else {
             filter = {}
         }
-        console.log(filter);
+        //console.log(filter);
         const products = await Product.aggregate([
             { $unwind: "$variants" },
             { $match: filter },
@@ -121,7 +121,7 @@ export const getProducts = async (req, res) => {
         page = Number(page) || 1;
         limit = Number(limit) || 10;
         let skip = (page - 1) * limit;
-        console.log(limit);
+      //  console.log(limit);
 
         const sortQuery = sort ? { [sort]: (sortType ? Number(sortType) : 1) } : { createdAt: -1 };
         //console.log(sortQuery);
@@ -150,7 +150,7 @@ export const getProductById = async (req, res) => {
     try {
         // console.log(req.params.id);
         const product = await Product.findById(req.params.id)//.populate("category");
-        console.log(product);
+        //console.log(product);
 
         if (!product || product.isDeleted) return res.status(404).json({ message: "Product not found" });
         res.json(product);
@@ -187,7 +187,7 @@ export const updateProduct = async (req, res) => {
 
             // Delete images from storage (optional)
             req.body.removedImagesPaths.forEach(imagePath => {
-                console.log(deleteFileWithPath(imagePath))
+               // console.log(deleteFileWithPath(imagePath))
             });
         }
 

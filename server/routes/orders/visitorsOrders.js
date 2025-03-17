@@ -6,14 +6,14 @@ import {
     deleteVisitorsOrder,
     addVisitorsOrder,
 } from "../../controllers/orders/visitorsOrders.js";
-//import { authMiddleware, roleMiddleware } from "../middlewares/Middlewares.js";
+import { authMiddleware, roleMiddleware } from "../../middlewares/autherization.js";
 export const visitorsOrdersRoute = express.Router();
 
 
 visitorsOrdersRoute.get("/", getAllVisitorsOrders);
 visitorsOrdersRoute.post("/", addVisitorsOrder);
-visitorsOrdersRoute.put("/:id", updateVisitorsOrder);
-visitorsOrdersRoute.delete("/:id", deleteVisitorsOrder);
+visitorsOrdersRoute.put("/:id",authMiddleware,roleMiddleware(["admin","user"]), updateVisitorsOrder);
+visitorsOrdersRoute.delete("/:id",authMiddleware,roleMiddleware(["admin","user"]), deleteVisitorsOrder);
 
 
 export default visitorsOrdersRoute;
