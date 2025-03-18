@@ -13,10 +13,10 @@ const addressRoute = new Router()
 
 addressRoute.use("/senders", senderRouter)
 
-addressRoute.post('/importCSV',authMiddleware,roleMiddleware(["admin"]), upload.single('addresses'), importAddressesFromCSV)
+addressRoute.post('/importCSV', authMiddleware, roleMiddleware(["admin"]), upload.single('addresses'), importAddressesFromCSV)
 addressRoute.post('/seprated', getAddressSeprated);
-addressRoute.post('/changestatus',authMiddleware,roleMiddleware(["admin"]), updateStatus);
-addressRoute.put('/change_shipping_price',authMiddleware,roleMiddleware(["admin"]), updatePriceOfProvince);
+addressRoute.post('/changestatus', authMiddleware, roleMiddleware(["admin"]), updateStatus);
+addressRoute.put('/change_shipping_price', authMiddleware, roleMiddleware(["admin"]), updatePriceOfProvince);
 addressRoute.get('/', getAddresses);
 // addressRoute.post('/', addAddress);
 // addressRoute.put('/:id', updateAddress);

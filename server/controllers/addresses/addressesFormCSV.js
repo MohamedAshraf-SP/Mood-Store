@@ -9,13 +9,13 @@ export const importAddressesFromCSV = async (req, res) => {
         let pass = req.query.pass
 
         if ((pass != process.env.DIVA_API_SECRET)) {
-            return res.status(403).json({ message: "cant do that!!!!!!!!!! " })
+            return res.status(403).json({ message: "cant do that!!!! " })
         }
 
         if (!req.file) {
             return res.status(400).json({ message: "File not found!!" })
         }
-        
+
         let envLimit = parseInt(process.env.CSV_import_limit)
         let start = parseInt(req.query.start) || 1
         let end = parseInt(req.query.end) || envLimit
@@ -32,16 +32,15 @@ export const importAddressesFromCSV = async (req, res) => {
         }
 
 
-       
-
 
         const path = req.file.path
 
         const results = await readCsvAsync(`./${path}`)
-        //console.log(end);
 
-        for (let i = start; i <= end; i++) {
-            // console.log(results[i]['Gov']);
+        let loopEnd = end > results.length - 1 ? results.length : end
+
+        for (let i = start; i <= loopEnd; i++) {
+          //  console.log(results[i]);
 
             let newAddress = new Address({
                 Province: results[i]['Gov'] || "-",
@@ -53,7 +52,7 @@ export const importAddressesFromCSV = async (req, res) => {
             await newAddress.save()
 
 
-
+            //   console.log(i);
         }
 
         deleteFileWithPath(`./${path}`)

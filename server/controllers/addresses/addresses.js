@@ -39,9 +39,10 @@ export const updateStatus = async (req, res) => {
             return res.status(400).json({ success: false, message: "يرجي اكمال البيانات" });
         }
 
-        const result = await Address.updateOne({ Province, City, Area }, { $set: { enabled } });
+        const result = await Address.updateMany({ Province, City, Area }, { $set: { enabled } });
 
-        if (result.modifiedCount === 0) {
+     
+        if (result[0].modifiedCount === 0) {
             return res.status(404).json({ success: false, message: "العنوان موجود او تم ضبطه بالفعل !!" });
         }
 
