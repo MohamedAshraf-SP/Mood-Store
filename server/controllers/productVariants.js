@@ -5,12 +5,12 @@ import { generateBarcode } from "../utils/generators/generators.js";
 export const addVariant = async (req, res) => {
     try {
 
-        
+
         const { id } = req.params; // Product ID from URL
-        const {  size, color, stock } = req.body; 
-       
-        const barCode=generateBarcode()
-       
+        const { size, color, stock } = req.body;
+
+        const barCode = generateBarcode()
+
         const product = await Product.findById(id);
         if (!product) return res.status(404).json({ message: "Product not found" });
 
@@ -44,7 +44,7 @@ export const getVariants = async (req, res) => {
 export const updateVariant = async (req, res) => {
     try {
         const { id, variantId } = req.params; // Product ID & Variant ID from URL
-        const {  size, color, stock } = req.body; // Updated details
+        const { size, color, stock } = req.body; // Updated details
 
         const product = await Product.findById(id);
         if (!product) return res.status(404).json({ message: "Product not found" });
@@ -54,7 +54,7 @@ export const updateVariant = async (req, res) => {
         if (!variant) return res.status(404).json({ message: "Variant not found" });
 
         // Update the variant fields
-        
+
         if (size) variant.size = size;
         if (color) variant.color = color;
         if (stock !== undefined) variant.stock = stock;
@@ -89,7 +89,7 @@ export const deleteVariant = async (req, res) => {
 // ✅ Add Stock by barCode (default: +1)
 export const addStock = async (req, res) => {
     try {
-     
+
         const { barCode } = req.params;
         //console.log(barCode)
 
@@ -104,11 +104,22 @@ export const addStock = async (req, res) => {
         const variant = product.variants.find(v => v.barCode === barCode);
         variant.stock += 1;
 
+
+
+
+
         await product.save();
-        res.status(200).json({ message: "Stock increased successfully", variant });
+
+        let responseVariant = {
+            ...variant.toObject(),
+            name: product.name,
+            price: product.price
+        }
+
+        res.status(200).json({ message: "Stock increased successfully", responseVariant });
 
     } catch (error) {
-        res.status(500).json({ message: "Error updating stock", error });
+        res.status(500).json({ message: "Error updating stock", err: error.message });
     }
 };
 
@@ -130,13 +141,21 @@ export const decreaseStock = async (req, res) => {
         if (variant.stock > 0) {
             variant.stock -= 1;
             await product.save();
-            res.status(200).json({ message: "Stock decreased successfully", variant });
+
+
+            let responseVariant = {
+                ...variant.toObject(),
+                name: product.name,
+                price: product.price
+            }
+
+            res.status(200).json({ message: "Stock decreased successfully", responseVariant });
         } else {
             res.status(400).json({ message: "Stock is already 0, cannot decrease further" });
         }
 
     } catch (error) {
-        res.status(500).json({ message: `${error.message}`});
+        res.status(500).json({ message: `${error.message}` });
     }
 };
 
