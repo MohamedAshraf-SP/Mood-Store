@@ -12,7 +12,7 @@ import { authMiddleware, roleMiddleware } from "../middlewares/autherization.js"
 export const usersRoute = express.Router();
 
 usersRoute.use(authMiddleware, roleMiddleware(["admin"]))
-usersRoute.get("/counts", roleMiddleware(["admin"]), getCount);
+usersRoute.get("/counts", getCount);
 usersRoute.delete("/:id", deleteUser);
 usersRoute.post("/:id", getUser);
 usersRoute.post("/", addUser);

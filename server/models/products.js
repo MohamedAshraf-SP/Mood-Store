@@ -11,7 +11,7 @@ const variantSchema = new mongoose.Schema({
         type: Number, required: true, min: 0,
         validate: {
             validator: function (stock) {
-                return stock >= 1; // Ensure at least one variant exists
+                return stock >= 0; // Ensure at least one variant exists
             },
             message: "لا يوجد عناصر بالمخزون بهذا المنتج",
         }

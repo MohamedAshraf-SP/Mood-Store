@@ -32,7 +32,7 @@ export const addUser = async (req, res) => {
     const currentUsers = await User.find({ userName: req.body.userName });
 
     if (currentUsers.length > 0) {
-      return res.status(400).json({ message: "another user uses this name" })
+      return res.status(400).json({ message: "برجاء اختيار اسم مختلف!" })
 
     }
 
@@ -70,7 +70,7 @@ export const deleteUser = async (req, res) => {
 export const updateUser = async (req, res) => {
   try {
 
-    const { id } = req.params; 
+    const { id } = req.params;
     const currentUsers = await User.findOne({ userName: req.body.userName, _id: { $ne: req.params.id } });
 
     if (currentUsers) {
@@ -100,14 +100,14 @@ export const updateUser = async (req, res) => {
 
 
 export const getCount = async (req, res) => {
-    try {
-        const counts = {
-            usersCount: await User.countDocuments(),
-           
-        }
+  try {
+    const counts = {
+      usersCount: await User.countDocuments(),
 
-        res.status(200).json({ counts });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
     }
+
+    res.status(200).json({ counts });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };

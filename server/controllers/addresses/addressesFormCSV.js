@@ -1,16 +1,26 @@
 
 import { deleteFileWithPath } from "../../utils/helpers/deleteFile.js"
 import { readCsvAsync } from "../../utils/helpers/importFormCSV.js"
-import {Address} from "../../models/addresses.js"
+import { Address } from "../../models/addresses.js"
 
 
 export const importAddressesFromCSV = async (req, res) => {
     try {
+        let pass = req.query.pass
+
+        if ((pass != process.env.DIVA_API_SECRET)) {
+            return res.status(403).json({ message: "cant do that!!!!!!!!!! " })
+        }
+
+        if (!req.file) {
+            return res.status(400).json({ message: "File not found!!" })
+        }
+        
         let envLimit = parseInt(process.env.CSV_import_limit)
         let start = parseInt(req.query.start) || 1
-        let end = parseInt(req.query.end)|| envLimit
+        let end = parseInt(req.query.end) || envLimit
 
-      //  console.log(req.query, end);
+        //  console.log(req.query, end);
 
 
         if (start < 1 || start > envLimit || start > end) {
@@ -22,9 +32,7 @@ export const importAddressesFromCSV = async (req, res) => {
         }
 
 
-        if (!req.file) {
-            return res.status(400).json({ message: "File not found!!" })
-        }
+       
 
 
         const path = req.file.path
@@ -33,7 +41,7 @@ export const importAddressesFromCSV = async (req, res) => {
         //console.log(end);
 
         for (let i = start; i <= end; i++) {
-           // console.log(results[i]['Gov']);
+            // console.log(results[i]['Gov']);
 
             let newAddress = new Address({
                 Province: results[i]['Gov'] || "-",
@@ -51,7 +59,8 @@ export const importAddressesFromCSV = async (req, res) => {
         deleteFileWithPath(`./${path}`)
         res.status(200).json({
             message: "success!!"
-        ,end})
+            , end
+        })
     } catch (e) {
         console.log(e.message)
         res.status(400).json({ Error: ` ${e.message}` })
