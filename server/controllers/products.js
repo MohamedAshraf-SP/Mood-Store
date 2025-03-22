@@ -65,6 +65,7 @@ export const addProduct = async (req, res) => {
             // MongoDB duplicate key error
             return res.status(400).json({ message: "Barcode must be unique!" });
         }
+        console.log(error);
         res.status(400).json({ error: error.message });
     }
 }

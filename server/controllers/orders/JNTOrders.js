@@ -1,5 +1,6 @@
 // Import the order model
 import { all } from "axios";
+import { PDFDocument } from 'pdf-lib';
 import Order from "../../models/orders.js";
 import { generateJTCancelRequestBody, generateTrackRequestBody, generateJTCreateRequestBody, generateJTPrintRequestBody, OrderRequest } from "../../services/APIs/JT_API.js";
 import mongoose from "mongoose";
@@ -123,6 +124,69 @@ export const printJNTOrder = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
+export const printManyJNTOrder = async (req, res) => {
+    try {
+        const ids = req.body.ids
+        let { printCod, printSize, showCustomerOrderId } = req.body
+
+
+        // console.log(printCod, printSize, showCustomerOrderId);
+        let ordersData = await Order.find({ _id: { $in: [...ids] }, deleted: "0", confirmed: "1" })
+            .select('-_id  billCode customerCode')
+            .lean();
+        console.log(ordersData);
+
+        if (ordersData.length == 0) {
+            return res.status(404).json({ message: "طلبات غير موجوده" });
+        }
+
+        ordersData.filter((order) => {
+            if (order.billCode == "-") {
+                return res.status(404).json({ message: "بعض طلبات غير مؤكده تاكد من طلبات المحدده" });
+            }
+        })
+
+
+        let ordersBillsBase64Array = []
+        const orders = ordersData.map((order) => {
+            order.printCod = printCod
+            order.printSize = printSize
+            order.showCustomerOrderId = showCustomerOrderId
+            ordersBillsBase64Array.push(generateJTPrintRequestBody(order))
+        })
+
+        console.log(ordersBillsBase64Array);
+
+
+
+        //let printRequestData = 
+        // let  cancelRequestData= generateJTCancelRequestBody({txlogisticId:"SYS-685489473"})
+
+        ///console.log(orderData,printRequestData);
+
+
+        let JTBase64responses = await Promise.all(ordersBillsBase64Array.map(async (orderPrintData) => {
+            const responseOfJT = await OrderRequest('/order/printOrder', orderPrintData)
+            return responseOfJT.data.data.base64EncodeContent
+        }))
+
+
+
+        let mergedFile = await mergeBase64PDFs(JTBase64responses)
+
+
+
+        // // console.log(responseOfJT.data.data.base64EncodeContent);
+
+        res.setHeader("Content-Type", "application/pdf");
+        res.status(200).write(mergedFile)
+        res.end()
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
 export const cancelJNTOrder = async (req, res) => {
     try {
         let orderData = await Order.findByIdAndUpdate(req.params.id, { deleted: "1" })
@@ -175,7 +239,7 @@ export const trackOrder = async (req, res) => {
         //   let allRequestData = generateTrackRequestBody(requestData[0])
         let allRequestData = generateTrackRequestBody(requestData1)
 
-       // console.log(allRequestData)
+        // console.log(allRequestData)
 
         const responseOfJT = await OrderRequest('/logistics/trace', allRequestData)
 
@@ -201,3 +265,37 @@ export const trackOrder = async (req, res) => {
 //     }
 // };
 
+
+
+const mergeBase64PDFs = async (base64PDFs) => {
+    try {
+        console.log(base64PDFs);
+
+        if (!Array.isArray(base64PDFs) || base64PDFs.length === 0) {
+            return "No PDFs provided"
+        }
+
+        // Create a new PDF document to merge all PDFs
+        const mergedPdf = await PDFDocument.create();
+
+        for (const base64content of base64PDFs) {
+            // Decode Base64 content into a Buffer
+            const pdfBuffer = Buffer.from(base64content, "base64");
+
+            // Load the PDF into pdf-lib
+            const pdfDoc = await PDFDocument.load(pdfBuffer);
+
+            // Copy pages from the current PDF into the merged PDF
+            const copiedPages = await mergedPdf.copyPages(pdfDoc, pdfDoc.getPageIndices());
+            copiedPages.forEach((page) => mergedPdf.addPage(page));
+        }
+
+
+        // Save the merged PDF to a buffer
+        let mergedPdfBytes = await mergedPdf.save();
+
+        return mergedPdfBytes
+    } catch (error) {
+        console.log(error)
+    }
+}
