@@ -29,7 +29,8 @@ export const generateJTCreateRequestBody = (requestData, itemsData = requestData
         expressType: "EZ", // Static
         deliveryType: "04", // Static (Home Delivery)
         goodsType: requestData.goodsType || "ITN16", // Static (Others)
-
+        phone: requestData.phone,
+        phone: requestData.mobile,
         length: requestData.length || 30, // Use default if not provided
         weight: requestData.weight || 1, // Default weight
         itemsValue: requestData.itemsValue || "",

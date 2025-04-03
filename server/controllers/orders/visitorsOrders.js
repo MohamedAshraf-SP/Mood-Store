@@ -13,6 +13,7 @@ export const getAllVisitorsOrders = async (req, res) => {
         const skip = (page - 1) * limit;
 
         const orders = await Order.find({ confirmed: 0, deleted: 0 })
+            .sort({ updatedAt: -1 })
             .skip(skip)
             .limit(limit);
 
@@ -36,6 +37,8 @@ export const addVisitorsOrder = async (req, res) => {
 
         const orderData = generateJTCreateRequestBody(req.body, req.body.items)
         const newOrder = await new Order(orderData).save()
+
+        console.log(newOrder);
         res.status(201).json(newOrder)
     } catch (error) {
         res.status(400).json({ error: error.message });

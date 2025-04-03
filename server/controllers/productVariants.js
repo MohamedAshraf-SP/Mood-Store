@@ -140,6 +140,9 @@ export const decreaseStock = async (req, res) => {
 
         if (variant.stock > 0) {
             variant.stock -= 1;
+            product.soldCount += 1; // Increment sold count
+            // Update the product's sold count if needed
+
             await product.save();
 
 

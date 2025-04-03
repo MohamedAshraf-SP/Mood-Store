@@ -14,9 +14,11 @@ import { authMiddleware, roleMiddleware } from "../../middlewares/autherization.
 export const JNTOrdersRoute = express.Router();
 
 //JNTOrdersRoute.use(authMiddleware)
+JNTOrdersRoute.get("/track/:id", trackOrder);
+
 JNTOrdersRoute.use(authMiddleware, roleMiddleware(["admin", "user"]))
 
-JNTOrdersRoute.get("/track/:id", trackOrder);
+
 JNTOrdersRoute.get("/", getJNTOrders);
 JNTOrdersRoute.post("/print/all", printManyJNTOrder);
 JNTOrdersRoute.post("/print/:id", printJNTOrder);

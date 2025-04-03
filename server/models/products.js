@@ -68,6 +68,7 @@ const productSchema = new mongoose.Schema({
             createdAt: { type: Date, default: Date.now }
         }
     ],
+    soldCount: { type: Number, default: 0 },
     isFeatured: { type: Boolean, default: false },
     isActive: { type: Boolean, default: true },
     isDeleted: { type: Boolean, default: false }

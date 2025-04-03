@@ -122,9 +122,9 @@ export const getProducts = async (req, res) => {
         page = Number(page) || 1;
         limit = Number(limit) || 10;
         let skip = (page - 1) * limit;
-      //  console.log(limit);
+        //  console.log(limit);
 
-        const sortQuery = sort ? { [sort]: (sortType ? Number(sortType) : 1) } : { createdAt: -1 };
+        const sortQuery = sort ? { [sort]: (sortType ? Number(sortType) : 1), updatedAt: -1 } : { updatedAt: -1 };
         //console.log(sortQuery);
         const products = await Product.find(query)
             .sort(sortQuery)
@@ -169,7 +169,7 @@ export const updateProduct = async (req, res) => {
             return res.status(404).json({ error: "Product not found" });
         }
 
-        
+
         const variants = req.body.variants ? req.body.variants.map((variant) => {
             const normalizedVariant = Object.assign({}, variant);
             return {
@@ -188,7 +188,7 @@ export const updateProduct = async (req, res) => {
 
             // Delete images from storage (optional)
             req.body.removedImagesPaths.forEach(imagePath => {
-               // console.log(deleteFileWithPath(imagePath))
+                // console.log(deleteFileWithPath(imagePath))
             });
         }
 
@@ -237,7 +237,15 @@ export const updateStockByBarcode = async (req, res) => {
         }
 
         const variant = product.variants.find(v => v.barcode === barcode);
+        if (!variant) {
+            return res.status(404).json({ message: "Variant not found" });
+        }
+        if (operation !== "add" && operation !== "delete") {
+            return res.status(400).json({ message: "Invalid operation" });
+        }
+
         if (operation == "add") {
+
             variant.stock += quantity;
         } else if (operation == "delete") {
             variant.stock -= quantity;
