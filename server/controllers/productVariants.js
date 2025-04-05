@@ -151,7 +151,9 @@ export const decreaseStock = async (req, res) => {
             let responseVariant = {
                 ...variant.toObject(),
                 name: product.name,
-                price: product.price
+                price: product.price,
+                
+
             }
 
             res.status(200).json({ message: "Stock decreased successfully", responseVariant });

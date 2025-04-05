@@ -66,30 +66,30 @@ export const searchOrders = async (req, res) => {
         const { confirmed, receiverphone, billCode, txlogisticId, itemName, startDate, endDate } = req.body;
 
 
-        let filter = { $or: [] };
+        let filter = { $and: [] };
         let confirmStatus = {}
 
         if (confirmed) confirmStatus["confirmed"] = confirmed
-        if (receiverphone) filter.$or.push({ "receiver.mobile": receiverphone });
-        if (billCode) filter.$or.push({ billCode });
-        if (txlogisticId) filter.$or.push({ txlogisticId });
-        if (itemName) filter.$or.push({ "items.itemName": { $regex: itemName, $options: "i" } }); // Case-insensitive search
+        if (receiverphone) filter.$and.push({ "receiver.mobile": receiverphone });
+        if (billCode) filter.$and.push({ billCode });
+        if (txlogisticId) filter.$and.push({ txlogisticId });
+        if (itemName) filter.$and.push({ "items.itemName": { $regex: itemName, $options: "i" } }); // Case-insensitive search
 
         if (startDate && endDate) {
-            filter.$or.push({
+            filter.$and.push({
                 createdAt: {
                     $gte: new Date(startDate),
                     $lte: new Date(endDate)
                 }
             });
         } else if (startDate) {
-            filter.$or.push({ createdAt: { $gte: new Date(startDate) } });
+            filter.$and.push({ createdAt: { $gte: new Date(startDate) } });
         } else if (endDate) {
-            filter.$or.push({ createdAt: { $lte: new Date(endDate) } });
+            filter.$and.push({ createdAt: { $lte: new Date(endDate) } });
         }
 
         // If no search fields were provided, return all orders
-        if (filter.$or.length === 0) delete filter.$or;
+        if (filter.$and.length === 0) delete filter.$and;
 
         //console.log(filter);
         const orders = await Order.find({ $and: [filter, confirmStatus] });
