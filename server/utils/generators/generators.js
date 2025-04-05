@@ -37,5 +37,5 @@ export const generateID = () => {
 }
 
 export const generateBarcode = () => {
-    return "BAR" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6).toUpperCase();
+    return "BR" + Date.now().toString(36).slice(0, 4) + Math.random().toString(36).slice(5, 6).toUpperCase();
 };

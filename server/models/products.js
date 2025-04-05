@@ -15,7 +15,9 @@ const variantSchema = new mongoose.Schema({
             },
             message: "لا يوجد عناصر بالمخزون بهذا المنتج",
         }
-    }
+    },
+    totalWithdraw: { type: Number, default: 0 },
+    dayWithdraw: { type: Number, default: 0 },
 })
 
 const productSchema = new mongoose.Schema({
