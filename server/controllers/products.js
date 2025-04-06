@@ -3,6 +3,8 @@ import { generateBarcode } from "../utils/generators/generators.js";
 import { Category } from "../models/categories.js";
 import { deleteFileWithPath } from "../utils/helpers/deleteFile.js";
 import { getCountOfSchema } from "../services/general.js";
+import mongoose from "mongoose";
+import { escapeRegex } from "../utils/regex/regex.js";
 
 
 export const addProduct = async (req, res) => {
@@ -38,8 +40,9 @@ export const addProduct = async (req, res) => {
         // console.log(variants);
         /// console.log(req.files.mainImage);
 
-
         if (!req.files) return res.status(400).json({ error: "error" });
+        if (!req.files?.mainImage) return res.status(400).json({ error: "main image is required" });
+        if (!req.files?.images) return res.status(400).json({ error: "at least one image is reqired" });
 
 
         const images = req.files ? req.files.images.map(image => {
@@ -73,39 +76,45 @@ export const addProduct = async (req, res) => {
 
 export const searchVariants = async (req, res) => {
     try {
-        const { name } = req.query
-        let filter = { $or: [] }
+        const { name, categoryId } = req.query;
+
+
+        let filter = {}
+        if (categoryId) filter.category = new mongoose.Types.ObjectId(req.query.categoryId)
 
         if (name) {
-            filter.$or.push({ "name": name })
-            filter.$or.push({ "variants.color": name })
-
-        } else {
-            filter = {}
+            filter.$or = [
+                { name: { $regex: escapeRegex(name), $options: 'i' } },
+                { "variants.color": { $regex: escapeRegex(name), $options: 'i' } }
+            ];
         }
-        //console.log(filter);
+
+       // console.log(filter);
+
         const products = await Product.aggregate([
             { $unwind: "$variants" },
-            { $match: filter },
+            {
+                $match: filter
+            },
             {
                 $project: {
                     _id: 0,
-                    "product": { $concat: ["$name", " ", "$variants.color", " (", "$variants.size", ")"] },
-                    "variantId": "$variants._id",
+                    product: { $concat: ["$name", " ", "$variants.color", " (", "$variants.size", ")"] },
+                    variantId: "$variants._id",
                     "avilable items": "$variants.stock",
-                    "barCode": "$variants.barCode",
-                    "price": "$actualPrice"
-
-                    // "product": "$name $variants.size $variants.color",
-
+                    barCode: "$variants.barCode",
+                    price: "$actualPrice"
                 }
             }
-        ])
-        res.status(200).json({ products })
+        ]);
 
-    } catch (e) {
-        res.status(500).json({ message: e.message })
+        res.status(200).json({ products });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Internal Server Error" });
     }
+
 }
 
 export const getProducts = async (req, res) => {
