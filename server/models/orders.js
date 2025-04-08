@@ -63,6 +63,7 @@ const OrderSchema = new mongoose.Schema({
     sender: AddressSchema,
     items: [ItemSchema],
     confirmed:{ type: String, default: '0' },
+    printed:{ type: String, default: '0' },
     deleted:{ type: String, default: '0' }
 
 }, { timestamps: true });

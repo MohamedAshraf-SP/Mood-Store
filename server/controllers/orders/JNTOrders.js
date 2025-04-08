@@ -113,8 +113,18 @@ export const printJNTOrder = async (req, res) => {
 
         ///console.log(orderData,printRequestData);
 
+        let x = {}
         const responseOfJT = await OrderRequest('/order/printOrder', printRequestData)
+        //
+        //  console.log(responseOfJT.data.msg);
+        if (responseOfJT.data.msg == "success") {
+            orderData.printed = "1"
+            x = await Order.findByIdAndUpdate(req.params.id, orderData, {
+                new: true,
+            });
+        }
 
+        // console.log(x);
         const base64content = responseOfJT.data.data.base64EncodeContent
         const file = Buffer.from(base64content, "base64")
         // console.log(responseOfJT.data.data.base64EncodeContent);
