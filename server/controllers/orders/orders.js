@@ -63,7 +63,9 @@ export const searchOrders = async (req, res) => {
 
 export const searchOrders = async (req, res) => {
     try {
-        const { confirmed, receiverphone, printed, billCode, txlogisticId, itemName, startDate, endDate } = req.body;
+        const { confirmed, receiverphone, printed,
+            billCode, txlogisticId, itemName,
+            startDate, endDate } = req.body;
 
 
         let filter = { $and: [] };
@@ -94,7 +96,8 @@ export const searchOrders = async (req, res) => {
         if (filter.$and.length === 0) delete filter.$and;
 
         //console.log(filter);
-        const orders = await Order.find({ $and: [filter, confirmStatus, printStatus] });
+        const orders = await Order.find({ $and: [filter, confirmStatus, printStatus, { deleted: "0" }] })
+            ;
 
         //console.log(orders);
         res.json(orders);

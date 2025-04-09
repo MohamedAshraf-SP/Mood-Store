@@ -17,7 +17,7 @@ export const getAllVisitorsOrders = async (req, res) => {
             .skip(skip)
             .limit(limit);
 
-        const totalOrders = await Order.countDocuments({ confirmed: 0 });
+        const totalOrders = await Order.countDocuments({ confirmed: 0, deleted: 0 });
 
         res.status(200).json({
             totalOrders,
