@@ -61,10 +61,23 @@ export const deleteVisitorsOrder = async (req, res) => {
 // Update a order by ID
 export const updateVisitorsOrder = async (req, res) => {
     try {
-        const { id } = req.params; // Assuming you use ID to find the order
-        const updatedOrder = await Order.findOneAndUpdate(({ _id: id, deleted: "0", confirmed: "0" }), req.body, {
-            new: true,
-        });
+        const { id } = req.params;
+        if (req.body.totalQuantity) {
+            req.body.totalQuantity = parseInt(req.body.totalQuantity)
+        }
+
+        const order = await Order.findOne(({ _id: id, deleted: "0", confirmed: "0" }));
+
+        const newOrderData = generateJTCreateRequestBody({ ...order, ...req.body }, req.body.items)
+        newOrderData.txlogisticId = order.txlogisticId
+
+        // Assuming you use ID to find the order
+        const updatedOrder = await Order.findOneAndUpdate((
+            { _id: id, deleted: "0", confirmed: "0" }),
+            newOrderData,
+            {
+                new: true,
+            });
 
         if (!updatedOrder) {
             return res.status(404).json({ message: "order not found" });

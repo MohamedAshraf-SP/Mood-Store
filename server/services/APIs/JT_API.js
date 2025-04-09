@@ -58,10 +58,10 @@ export const generateJTCreateRequestBody = (requestData, itemsData = requestData
             city: requestData.receiver?.city || "-",
             mobile: requestData.receiver?.mobile || "0100000000",
             mailBox: requestData.receiver?.mailBox || "a@b.com",
-            phone: requestData.receiver?.phone ,
+            phone: requestData.receiver?.phone,
             countryCode: "EGY",
             name: requestData.receiver?.name || "-",
-            alternateReceiverPhoneNo: requestData.receiver?.alternateReceiverPhoneNo ,
+            alternateReceiverPhoneNo: requestData.receiver?.alternateReceiverPhoneNo,
             company: requestData.receiver?.company || "JT",
             postCode: requestData.receiver?.postCode || "11111",
             prov: requestData.receiver?.prov || "-",
@@ -144,6 +144,7 @@ export const generateJTGetOrdersRequestBody = (requestData) => {
 
 
 export const OrderRequest = async (path, generatedBody) => {
+
     let body = JSON.stringify(generatedBody)
     const data = { bizContent: (JSON.stringify(generatedBody)) }
     try {

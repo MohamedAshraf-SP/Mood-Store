@@ -74,10 +74,16 @@ export const confirmJNTOrder = async (req, res) => {
         }
 
         const responseOfJT = await OrderRequest('/order/addOrder', requestOrderData)
+        // console.log(responseOfJT.data);
+
+        if (responseOfJT.data.msg != "success") {
+            return res.status(400).json({ message: responseOfJT.data.msg })
+
+        }
         const updatedOrder = await Order.findByIdAndUpdate(orderId, { confirmed: "1", billCode: responseOfJT.data.data.billCode }, {
             new: true,
         });
-        res.status(201).json({ message: responseOfJT.data.message, updatedOrder })
+        res.status(201).json({ message: responseOfJT.data.msg, updatedOrder })
         // res.status(201).json({ requestOrderData })
     } catch (error) {
         res.status(400).json({ error: error.message });
