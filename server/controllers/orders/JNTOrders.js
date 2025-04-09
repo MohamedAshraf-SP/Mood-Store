@@ -118,8 +118,7 @@ export const printJNTOrder = async (req, res) => {
         //
         //  console.log(responseOfJT.data.msg);
         if (responseOfJT.data.msg == "success") {
-            orderData.printed = "1"
-            x = await Order.findByIdAndUpdate(req.params.id, orderData, {
+            x = await Order.findByIdAndUpdate(req.params.id, { printed: "1" }, {
                 new: true,
             });
         }
@@ -148,7 +147,7 @@ export const printManyJNTOrder = async (req, res) => {
         let ordersData = await Order.find({ _id: { $in: [...ids] }, deleted: "0", confirmed: "1" })
             .select('-_id  billCode customerCode')
             .lean();
-        console.log(ordersData);
+
 
         if (ordersData.length == 0) {
             return res.status(404).json({ message: "طلبات غير موجوده" });
@@ -161,6 +160,8 @@ export const printManyJNTOrder = async (req, res) => {
         })
 
 
+
+
         let ordersBillsBase64Array = []
         const orders = ordersData.map((order) => {
             order.printCod = printCod
@@ -169,7 +170,7 @@ export const printManyJNTOrder = async (req, res) => {
             ordersBillsBase64Array.push(generateJTPrintRequestBody(order))
         })
 
-        console.log(ordersBillsBase64Array);
+
 
 
 
@@ -183,6 +184,10 @@ export const printManyJNTOrder = async (req, res) => {
             const responseOfJT = await OrderRequest('/order/printOrder', orderPrintData)
             return responseOfJT.data.data.base64EncodeContent
         }))
+
+        await Order.updateMany({ _id: { $in: [...ids] } }, { printed: "1" }, {
+            new: true,
+        });
 
 
 
