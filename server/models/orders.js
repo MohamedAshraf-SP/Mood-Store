@@ -64,7 +64,16 @@ const OrderSchema = new mongoose.Schema({
     items: [ItemSchema],
     confirmed:{ type: String, default: '0' },
     printed:{ type: String, default: '0' },
-    deleted:{ type: String, default: '0' }
+    deleted:{ type: String, default: '0' },
+
+    // Shipping Provider Selection
+    shippingProvider: { type: String, enum: ['JT', 'ACCURATE'], default: 'JT' },
+
+    // Accurate Shipping Specific Fields
+    accurateTrackingNumber: String,
+    accurateShipmentId: String,
+    accurateStatus: String,
+    accurateShippingFees: Number
 
 }, { timestamps: true });
 
